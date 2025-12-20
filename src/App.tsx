@@ -1,18 +1,20 @@
 import { useState } from 'react'
 import MovieCard from './components/MovieCard';
-import movies from './data/movies.json'
+import movies from './data/now_playing.json'
 
 const  App = () => {
   
 
   return ( 
     <> 
-      { movies.movies.map( (movie) => (
+      { movies.results.map( (movie) => (
         <MovieCard
-          key={movie.name}
-          name={movie.name}
-          description={movie.description}
-          image = {movie.image}
+          key={movie.original_title}
+          name={movie.original_title}
+          description={movie.overview}
+          image = {
+            `https://image.tmdb.org/t/p/w500${movie.poster_path}?api_key=ce44532488cb6dc0691b05df5f5280db`
+            }
         />
       ))}
     </>
