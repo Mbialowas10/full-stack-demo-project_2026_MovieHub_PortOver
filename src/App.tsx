@@ -1,13 +1,22 @@
 import { useState } from 'react'
+import MovieCard from './components/MovieCard';
+import movies from './data/now_playing.json'
 
 const  App = () => {
+  
+
   return ( 
-    <>
-    <div className='max-w-lg mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-lg'>
-      <header>Movie Hub 2026</header>
-      <div>hi</div>
-    </div>
-    
+    <> 
+      { movies.results.map( (movie) => (
+        <MovieCard
+          key={movie.original_title}
+          name={movie.original_title}
+          description={movie.overview}
+          image = {
+            `https://image.tmdb.org/t/p/w500${movie.poster_path}?api_key=ce44532488cb6dc0691b05df5f5280db`
+            }
+        />
+      ))}
     </>
    );
 }
