@@ -1,13 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MovieCard from './components/MovieCard';
-import movies from './data/now_playing.json'
+//import movies from './data/now_playing.json'
+
+
 
 const  App = () => {
   
+  const [movies, setMovies] = useState([])
+
+  useEffect( () => {
+    fetch('http://localhost:4000/results')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      setMovies(data)
+    })
+    .catch(err => console.error(err))
+  },[])
 
   return ( 
     <> 
-      { movies.results.map( (movie) => (
+      { movies.map( (movie) => (
         <MovieCard
           key={movie.original_title}
           name={movie.original_title}
