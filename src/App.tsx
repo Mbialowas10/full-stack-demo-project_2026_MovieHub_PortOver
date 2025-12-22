@@ -7,6 +7,7 @@ import SearchMovies from "./components/pages/SearchMovies";
 import Favourites from "./components/pages/Favourites";
 import Reviews from "./components/pages/Reviews";
 import Profile from "./components/pages/Profile";
+import {ErrorBoundary} from "./components/ErrorBoundary";
 
 
 
@@ -17,7 +18,13 @@ const  App = () => {
     <Route path="/" element={<Layout />}>
 
       <Route index element={<TrendingMovies />}/>
-      <Route path="search" element={<SearchMovies/>}/>
+      
+        <Route path="search" element={
+          <ErrorBoundary>
+            <SearchMovies/>
+          </ErrorBoundary>
+          }/>
+    
       <Route path="favourites" element={<Favourites/>}/>
       <Route path="reviews" element={<Reviews/>} />
       <Route path="profile" element={<Profile />} />
@@ -31,3 +38,4 @@ const  App = () => {
 export default App;
 
 
+ 
