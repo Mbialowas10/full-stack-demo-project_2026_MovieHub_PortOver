@@ -1,37 +1,23 @@
-import { useEffect, useState } from 'react'
-import MovieCard from './components/MovieCard';
+import { Layout } from "./components/layout/Layout";
 //import movies from './data/now_playing.json'
+
+import { Routes, Route } from "react-router-dom";
+import TrendingMovies from "./components/pages/TreadingMovies";
 
 
 
 const  App = () => {
+  return(
+    <Routes>
+    {/* Layout renders all child routes via outlet */}
+    <Route path="/" element={<Layout />}>
+
+      <Route index element={<TrendingMovies />}/>
+    </Route>
+  </Routes>
+ 
+  )
   
-  const [movies, setMovies] = useState([])
-
-  useEffect( () => {
-    fetch('http://localhost:4000/results')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      setMovies(data)
-    })
-    .catch(err => console.error(err))
-  },[])
-
-  return ( 
-    <> 
-      { movies.map( (movie) => (
-        <MovieCard
-          key={movie.original_title}
-          name={movie.original_title}
-          description={movie.overview}
-          image = {
-            `https://image.tmdb.org/t/p/w500${movie.poster_path}?api_key=ce44532488cb6dc0691b05df5f5280db`
-            }
-        />
-      ))}
-    </>
-   );
 }
  
 export default App;

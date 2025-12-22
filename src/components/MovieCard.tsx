@@ -1,8 +1,8 @@
-const MovieCard = ({name, description, image}) => {
+export const MovieCard = ({name, description, image}) => {
     return ( 
         <>
           <div className='w-lg mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-lg'>
-            <h3 className="text-base font-semibold text-slate-900 dark:text-white">{name}</h3>
+            <h1 className="text-base font-semibold text-slate-900 dark:text-white">{name}</h1>
             
             <img
                 src={image}
@@ -20,5 +20,5 @@ const MovieCard = ({name, description, image}) => {
      );
 }
  
-export default MovieCard;
+
 

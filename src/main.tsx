@@ -2,11 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import HeaderNav from './components/HeaderNav.tsx'
+import HeaderNav from './components/layout/nav/HeaderNav.tsx'
+import { BrowserRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <HeaderNav />
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>   
   </StrictMode>,
 )

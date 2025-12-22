@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 
 
-export default function HeaderNav() {
+/**
+ * Purpose: To layout top navigation for 
+ * Trending, Search, Favourites, Reviews, and Profile
+ * Pages
+ * Styling - TailWindCSS 
+ * @returns JSX 
+ */
+const HeaderNav = () => {
   const items = [
     { href: "#trending", label: "Trending" },
     { href: "#search", label: "Search" },
@@ -43,3 +50,4 @@ export default function HeaderNav() {
     </header>
   );
 }
+export default HeaderNav;
