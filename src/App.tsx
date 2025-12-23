@@ -8,6 +8,7 @@ import Favourites from "./components/pages/Favourites";
 import Reviews from "./components/pages/Reviews";
 import Profile from "./components/pages/Profile";
 import {ErrorBoundary} from "./components/ErrorBoundary";
+import {LeaveReview} from "./components/LeaveReview"
 
 
 
@@ -28,6 +29,7 @@ const  App = () => {
       <Route path="favourites" element={<Favourites/>}/>
       <Route path="reviews" element={<Reviews/>} />
       <Route path="profile" element={<Profile />} />
+      <Route path="reviews/new" element={<LeaveReview />} />
     </Route>
   </Routes>
  
