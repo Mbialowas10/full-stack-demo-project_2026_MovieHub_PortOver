@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react'
 import { MovieCard } from '../MovieCard'
+import { fetchFromTMDB } from '../../api/tmdb';
+import { useTMDB } from '../../hooks/useTMDB';
+
 
 
 const  TrendingMovies= () => {
-    const [movies, setMovies] = useState([])
-
-  useEffect( () => {
-    fetch('http://localhost:4000/results')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      setMovies(data)
-    })
-    .catch(err => console.error(err))
-  },[])
+    //const [movies, setMovies] = useState([])
+    const movies = useTMDB("/trending/movie/week");
 
   return ( 
     <> 

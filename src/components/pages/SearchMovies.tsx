@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react'
 import SearchForm from "../SearchForm";
 import { MovieCard } from '../MovieCard';
-
+import { fetchFromTMDB } from '../../api/tmdb';
+import { useTMDB } from '../../hooks/useTMDB';
 
 const SearchMovies = () => {
     
-   
-    const api_key = import.meta.env.VITE_TMDB_API_KEY;
-
-    console.log("API_KEY", api_key)
     const [term, setTerm] = useState("")
-    const [movies, setMovies] = useState([])
+    
+    const movies = useTMDB(
+        "/search/movie",
+        `query=${encodeURIComponent(term)}`,
+        Boolean(term) // prevent auto-fetch on mount
+    )
 
     const handleSearch = (searchValue:string) =>{
         console.log("Searching for: ", searchValue);
@@ -20,7 +22,8 @@ const SearchMovies = () => {
     useEffect( () => {
         if (!term) return;
         //fetch('http://localhost:4000/results')
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${term}`)
+        //fetch(`https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${term}`)
+        fetchFromTMDB("/search/movie", `query=${encodeURIComponent(term)}`)
         .then(res => res.json())
         .then(data => {
           console.log(data)
