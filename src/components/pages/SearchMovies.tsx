@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import SearchForm from "../SearchForm";
 import { MovieCard } from '../MovieCard';
-import dotenv from "dotenv";
+
 
 const SearchMovies = () => {
     
-    dotenv.config()
-
-    const api_key = import.meta.env.VITE_TMDB_KEY;
+   
+    const api_key = import.meta.env.VITE_TMDB_API_KEY;
 
     console.log("API_KEY", api_key)
     const [term, setTerm] = useState("")
@@ -44,8 +43,8 @@ const SearchMovies = () => {
                       description={movie.overview}
                       image = {
                         `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                        }
-                    />
+                        } 
+                        />
                   ))}
         </>
      );
