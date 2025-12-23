@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export const MovieCard = ({name, description, image}) => {
     
     const style = {
@@ -20,7 +22,13 @@ export const MovieCard = ({name, description, image}) => {
 
             <p>{description}</p>
             <div>
-                Reviews
+                <NavLink
+                    to="reviews/new"
+                    className="text-blue-600 hover:underline"
+                >
+                    Leave A Review?
+                </NavLink>
+                
             </div>
         </div>   
         </>
