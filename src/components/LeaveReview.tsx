@@ -6,17 +6,32 @@ export const LeaveReview = () => {
     const [rating, setRating] = useState("");
     const [review,setReview] = useState("")
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const reviewData = {
             name,
             rating,
-            review
+            review,
+            createdAt: new Date().toISOString
         }
-        console.log("Review submitted:", reviewData);
+        try{
+            const resp = await fetch("http://localhost:4444/reviews",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify(reviewData)
+            });
+            if (!resp.ok){
+                throw new Error("Failed to post review");
+            }
+            const savedReview = await resp.json();
+            console.log("Saved", savedReview)
+        }catch(e){
+            console.log(e);
+        }
 
-        // save to json file for later use?
     };
 
     const styles = {
