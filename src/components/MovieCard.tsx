@@ -25,6 +25,7 @@ export const MovieCard = ({name, description, image}) => {
                 <NavLink
                     to="reviews/new"
                     className="text-blue-600 hover:underline"
+                    state={{mname:{name},image:{image}}}
                 >
                     Leave A Review?
                 </NavLink>

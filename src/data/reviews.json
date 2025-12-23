@@ -1,22 +1,20 @@
 {
   "reviews": [
     {
-      "id": "ba0f",
-      "name": "maksym",
+      "id": "e0fa",
+      "name": "mike",
       "rating": "5",
-      "review": "superb. "
+      "review": "A great movie!",
+      "movie": "Jaws",
+      "createdAt": "2025-12-23T18:25:53.375Z"
     },
     {
-      "id": "1469",
-      "name": "maksym",
-      "rating": "5",
-      "review": "superb. "
-    },
-    {
-      "id": "2311",
-      "name": "maksym",
-      "rating": "5",
-      "review": "superb. "
+      "id": "cb78",
+      "name": "jack",
+      "rating": "1",
+      "review": "awful :(",
+      "movie": "Titanic",
+      "createdAt": "2025-12-23T18:26:31.245Z"
     }
   ]
 }

@@ -1,119 +1,103 @@
-import { useState } from "react"
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const LeaveReview = () => {
-    
-    const [name,setName] = useState("");
-    const [rating, setRating] = useState("");
-    const [review,setReview] = useState("")
+  const location = useLocation();
+  const { mname, image } = location.state || {};
+  const movieName = mname?.name || "";
+  const movieImage = image?.image || "";
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+  const [name, setName] = useState("");
+  const [rating, setRating] = useState("");
+  const [review, setReview] = useState("");
 
-        const reviewData = {
-            name,
-            rating,
-            review,
-            createdAt: new Date().toISOString
-        }
-        try{
-            const resp = await fetch("http://localhost:4444/reviews",{
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body:JSON.stringify(reviewData)
-            });
-            if (!resp.ok){
-                throw new Error("Failed to post review");
-            }
-            const savedReview = await resp.json();
-            console.log("Saved", savedReview)
-        }catch(e){
-            console.log(e);
-        }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    const reviewData = {
+      name,
+      rating,
+      review,
+      movie: movieName,
+      createdAt: new Date().toISOString(),
     };
 
-    const styles = {
-    form: `
-      max-w-lg mx-auto mt-8
-      rounded-xl bg-white p-6 shadow-md
-      flex flex-col gap-4
-    `,
-    input: `
-      rounded-md border border-gray-300
-      px-4 py-2
-      text-gray-900
-      focus:outline-none focus:ring-2 focus:ring-blue-500
-    `,
-    textarea: `
-      rounded-md border border-gray-300
-      px-4 py-2 min-h-[120px]
-      resize-y
-      focus:outline-none focus:ring-2 focus:ring-blue-500
-    `,
-    button: `
-      self-end
-      rounded-lg bg-blue-600
-      px-6 py-2
-      font-semibold text-white
-      hover:bg-blue-700
-      transition
-    `,
-    label: `
-      text-sm font-medium text-gray-700
-    `,
+    try {
+      const resp = await fetch("http://localhost:4444/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reviewData),
+      });
+      if (!resp.ok) throw new Error("Failed to post review");
+      const savedReview = await resp.json();
+      console.log("Saved:", savedReview);
+
+      setName("");
+      setRating("");
+      setReview("");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
+  const styles = {
+    form: `max-w-lg mx-auto mt-8 rounded-xl bg-white p-6 shadow-md flex flex-col gap-4`,
+    input: `rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500`,
+    textarea: `rounded-md border border-gray-300 px-4 py-2 min-h-[120px] resize-y focus:outline-none focus:ring-2 focus:ring-blue-500`,
+    button: `self-end rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 transition`,
+    label: `text-sm font-medium text-gray-700`,
+  };
 
+  return (
+    <form onSubmit={handleSubmit} className={styles.form}>
+      {movieName && <h2 className="text-xl font-semibold">{movieName}</h2>}
+      {movieImage && (
+        <img src={movieImage} alt={movieName} className="w-full h-auto rounded mb-4" />
+      )}
 
-    return (  
-        <form onSubmit={handleSubmit} className={styles.form}>
-            <h2 className="text-xl font-semibold">Leave a Review</h2>
-            <label className={styles.label}>
-                Your Name
-                <input 
-                    type="text"
-                    value={name}
-                    onChange={(e)=>setName(e.target.value)} 
-                    className={styles.input}
-                    placeholder="Who are you?"
-                    required
-                />
-            </label>
-            <label className={styles.label}>
-                Rating
-                <select
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-                className={styles.input}
-                required
-                >
-                <option value="">Select rating</option>
-                <option value="1">⭐ 1</option>
-                <option value="2">⭐ 2</option>
-                <option value="3">⭐ 3</option>
-                <option value="4">⭐ 4</option>
-                <option value="5">⭐ 5</option>
-                </select>
-            </label>
-            <label className={styles.label}>
-                Review
-                <textarea
-                value={review}
-                onChange={(e) => setReview(e.target.value)}
-                className={styles.textarea}
-                placeholder="What did you think about the movie?"
-                required
-                />
-            </label>
+      <label className={styles.label}>
+        Your Name
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={styles.input}
+          placeholder="Who are you?"
+          required
+        />
+      </label>
 
-            <button type="submit" className={styles.button}>
-                Submit Review
-            </button>
+      <label className={styles.label}>
+        Rating
+        <select
+          value={rating}
+          onChange={(e) => setRating(e.target.value)}
+          className={styles.input}
+          required
+        >
+          <option value="">Select rating</option>
+          <option value="1">⭐ 1</option>
+          <option value="2">⭐ 2</option>
+          <option value="3">⭐ 3</option>
+          <option value="4">⭐ 4</option>
+          <option value="5">⭐ 5</option>
+        </select>
+      </label>
 
-        </form>
-    );
-}
- 
+      <label className={styles.label}>
+        Review
+        <textarea
+          value={review}
+          onChange={(e) => setReview(e.target.value)}
+          className={styles.textarea}
+          placeholder="What did you think about the movie?"
+          required
+        />
+      </label>
 
+      <button type="submit" className={styles.button}>
+        Submit Review
+      </button>
+    </form>
+  );
+};
