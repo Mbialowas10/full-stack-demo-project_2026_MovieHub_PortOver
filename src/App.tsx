@@ -11,20 +11,25 @@ import {ErrorBoundary} from "./components/ErrorBoundary";
 import {LeaveReview} from "./components/LeaveReview"
 
 
-
+/**
+ * Main entry point into React app
+ * 
+ * @returns 
+ */
 const  App = () => {
   return(
     <Routes>
     {/* Layout renders all child routes via outlet */}
     <Route path="/" element={<Layout />}>
-
+      
+      {/* A Route just loads a component when path visited. */}
       <Route index element={<TrendingMovies />}/>
       
-        <Route path="search" element={
-          <ErrorBoundary>
-            <SearchMovies/>
-          </ErrorBoundary>
-          }/>
+      <Route path="search" element={
+        <ErrorBoundary>
+          <SearchMovies/>
+        </ErrorBoundary>
+        }/>
     
       <Route path="favourites" element={<Favourites/>}/>
       <Route path="reviews" element={<Reviews/>} />

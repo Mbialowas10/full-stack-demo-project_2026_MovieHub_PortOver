@@ -11,7 +11,10 @@ export const MovieCard = ({name, description, image}) => {
     return ( 
         <>
           <div className='w-lg mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-lg'>
-            <h1 className="text-base font-semibold text-slate-900 dark:text-white">{name}</h1>
+
+            <h1 className="text-base font-semibold text-slate-900 dark:text-white">
+                {name}
+            </h1>
             
             <img style={style}
                 src={image}
@@ -21,13 +24,14 @@ export const MovieCard = ({name, description, image}) => {
             />
 
             <p>{description}</p>
+
             <div>
                 <NavLink
                     to="reviews/new"
                     className="text-blue-600 hover:underline"
                     state={{mname:{name},image:{image}}}
                 >
-                    Leave A Review?
+                    Leave A Review...
                 </NavLink>
                 
             </div>

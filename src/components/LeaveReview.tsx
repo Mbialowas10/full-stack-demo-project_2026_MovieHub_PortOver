@@ -22,6 +22,7 @@ export const LeaveReview = () => {
       createdAt: new Date().toISOString(),
     };
 
+    {/** json server being used here for post request */}
     try {
       const resp = await fetch("http://localhost:4444/reviews", {
         method: "POST",

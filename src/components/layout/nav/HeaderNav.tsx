@@ -10,6 +10,11 @@ import { NavLink } from "react-router-dom";
  * @returns JSX 
  */
 const HeaderNav = () => {
+
+  /**
+   * items represents an array of objects containing key
+   * value pairs: path and label
+   */
   const items = [
     { path: "/", label: "Trending" },
     { path: "/search", label: "Search" },

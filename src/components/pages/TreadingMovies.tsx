@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react'
 import { MovieCard } from '../MovieCard'
-import { fetchFromTMDB } from '../../api/tmdb';
 import { useTMDB } from '../../hooks/useTMDB';
 
 
+/**
+ * @returns TrendingMovies jsx
+ * 
+ */
 
 const  TrendingMovies= () => {
-    //const [movies, setMovies] = useState([])
-    const movies = useTMDB("/trending/movie/week");
+  
+  {/* /trending/movie/week endpoint call */}
+  const movies = useTMDB("/trending/movie/week");
 
   return ( 
     <> 
