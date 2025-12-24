@@ -24,6 +24,7 @@ const Reviews = () => {
             name={review.name}
             rating={review.rating}
             review={review.review}
+            createdAt={review.createdAt}
           />
         ))
       )}

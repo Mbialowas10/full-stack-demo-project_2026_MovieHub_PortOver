@@ -23,6 +23,22 @@
       "review": "would like to watch",
       "movie": "One Battle After Another",
       "createdAt": "2025-12-23T20:19:34.972Z"
+    },
+    {
+      "id": "c6ea",
+      "name": "maksym",
+      "rating": "5",
+      "review": "awesome movie!",
+      "movie": "Five Nights at Freddy's 2",
+      "createdAt": "2025-12-24T17:13:48.063Z"
+    },
+    {
+      "id": "734c",
+      "name": "michael B",
+      "rating": "3",
+      "review": "just okay. ",
+      "movie": "xXx",
+      "createdAt": "2025-12-24T17:16:31.455Z"
     }
   ]
 }
