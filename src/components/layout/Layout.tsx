@@ -8,7 +8,7 @@ import Footer from "./footer/Footer";
  * @returns 
  */
 // outlet component has pages injected dynamically
-export function Layout() {
+export default function Layout() {
     return(
         <>
             {/* HeaderNav applied to all pages in website */}
