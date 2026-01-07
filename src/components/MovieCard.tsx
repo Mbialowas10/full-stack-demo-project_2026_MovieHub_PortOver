@@ -1,7 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
+import type {MovieCardProps} from "../types/MovieCardProps"
 
-export const MovieCard = ({ movieID, name, description, image }) => {
+
+export const MovieCard = ({ movieID, name, description, image }: MovieCardProps) => {
     
     const [isFavourite, setIsFavourite] = useState(false);
     const [favouriteId,setFavouriteId] = useState<number| null>(null);
