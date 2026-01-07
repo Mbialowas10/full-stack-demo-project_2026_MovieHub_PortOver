@@ -1,4 +1,5 @@
-const ReviewCard = ({ name, rating, review, movie,createdAt }) => {
+import type { ReviewCardProps } from "../types/ReviewCardProps";
+const ReviewCard = ({ name, rating, review, movie,createdAt }:ReviewCardProps) => {
   return (
     <div className="border p-4 rounded mb-4 shadow-sm bg-gray-50">
       {movie && <h3 className="font-semibold text-lg">{movie}</h3>}

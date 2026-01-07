@@ -6,7 +6,7 @@ const BASE_URL = "https://api.themoviedb.org/3";
  * Fetches data from TMDB API
  */
 
-export const fetchFromTMDB = async (endpoint, params = "") => {
+export const fetchFromTMDB = async (endpoint:string, params = ""): Promise<any> => {
   const url = `${BASE_URL}${endpoint}?api_key=${API_KEY}&${params}`;
 
   const res = await fetch(url);
