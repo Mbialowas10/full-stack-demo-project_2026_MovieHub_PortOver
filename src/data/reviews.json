@@ -1,0 +1,60 @@
+{
+  "reviews": [
+    {
+      "id": "e0fa",
+      "name": "mike",
+      "rating": "5",
+      "review": "A great movie!",
+      "movie": "Jaws",
+      "createdAt": "2025-12-23T18:25:53.375Z"
+    },
+    {
+      "id": "cb78",
+      "name": "jack",
+      "rating": "1",
+      "review": "awful :(",
+      "movie": "Titanic",
+      "createdAt": "2025-12-23T18:26:31.245Z"
+    },
+    {
+      "id": "1b70",
+      "name": "joe",
+      "rating": "1",
+      "review": "would like to watch",
+      "movie": "One Battle After Another",
+      "createdAt": "2025-12-23T20:19:34.972Z"
+    },
+    {
+      "id": "c6ea",
+      "name": "maksym",
+      "rating": "5",
+      "review": "awesome movie!",
+      "movie": "Five Nights at Freddy's 2",
+      "createdAt": "2025-12-24T17:13:48.063Z"
+    },
+    {
+      "id": "734c",
+      "name": "michael B",
+      "rating": "3",
+      "review": "just okay. ",
+      "movie": "xXx",
+      "createdAt": "2025-12-24T17:16:31.455Z"
+    },
+    {
+      "id": "ff08",
+      "name": "mik",
+      "rating": "2",
+      "review": "dfdsf",
+      "movie": "Avatar: Fire and Ash",
+      "createdAt": "2026-01-04T23:00:56.908Z"
+    },
+    {
+      "id": "501f",
+      "name": "john",
+      "rating": "4",
+      "review": "dfte",
+      "movie": "Predator: Badlands",
+      "createdAt": "2026-01-07T17:47:53.294Z"
+    }
+  ]
+}

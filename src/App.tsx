@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Layout } from "./components/layout/Layout";
+//import movies from './data/now_playing.json'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { Routes, Route } from "react-router-dom";
+import TrendingMovies from "./components/pages/TreadingMovies";
+import SearchMovies from "./components/pages/SearchMovies";
+import Favourites from "./components/pages/Favourites";
+import Reviews from "./components/pages/Reviews";
+import Profile from "./components/pages/Profile";
+import {ErrorBoundary} from "./components/ErrorBoundary";
+import {LeaveReview} from "./components/LeaveReview"
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+/**
+ * Main entry point into React app
+ * 
+ * @returns 
+ */
+const  App = () => {
+  return(
+    <Routes>
+    {/* Layout renders all child routes via outlet */}
+    <Route path="/" element={<Layout />}>
+      
+      {/* A Route just loads a component when path visited. */}
+      <Route index element={<TrendingMovies />}/>
+      
+      <Route path="search" element={
+        <ErrorBoundary>
+          <SearchMovies/>
+        </ErrorBoundary>
+        }/>
+    
+      <Route path="favourites" element={<Favourites/>}/>
+      <Route path="reviews" element={<Reviews/>} />
+      <Route path="profile" element={<Profile />} />
+      <Route path="reviews/new" element={<LeaveReview />} />
+      <Route path="search/reviews/new" element={<LeaveReview />}/>
+    </Route>
+  </Routes>
+ 
   )
+  
 }
+ 
+export default App;
 
-export default App
+
+ 

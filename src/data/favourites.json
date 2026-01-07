@@ -1,0 +1,18 @@
+{
+  "favourites": [
+    {
+      "id": "02ee",
+      "m_name": "Goodbye June",
+      "image": "https://image.tmdb.org/t/p/w500/ygsMOnttVCekvJZgvmnvaemxPHA.jpg?api_key=ce44532488cb6dc0691b05df5f5280db",
+      "m_favourited": true,
+      "createdAt": "2025-12-24T16:56:10.078Z"
+    },
+    {
+      "id": "385f",
+      "m_name": "Eternity",
+      "image": "https://image.tmdb.org/t/p/w500/o8pg20G67BGmQvRkXwstNre062J.jpg?api_key=ce44532488cb6dc0691b05df5f5280db",
+      "m_favourited": true,
+      "createdAt": "2025-12-24T16:56:14.833Z"
+    }
+  ]
+}
