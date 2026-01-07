@@ -24,7 +24,7 @@ export const LeaveReview = () => {
 
     {/** json server being used here for post request */}
     try {
-      const resp = await fetch("http://localhost:4444/reviews", {
+      const resp = await fetch("http://localhost:4000/reviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reviewData),
