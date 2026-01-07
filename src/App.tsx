@@ -1,4 +1,4 @@
-import { Layout } from "./components/layout/Layout";
+import Layout  from "./components/layout/Layout"
 //import movies from './data/now_playing.json'
 
 import { Routes, Route } from "react-router-dom";

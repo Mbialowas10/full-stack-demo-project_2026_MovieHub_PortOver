@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import ReviewCard from  "../ReviewCard"
+import type { Review } from "../../types/Review";
 
 const Reviews = () => {
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:4000/reviews")

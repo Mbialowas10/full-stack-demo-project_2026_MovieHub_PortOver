@@ -7,13 +7,9 @@ export const MovieCard = ({ movieID, name, description, image }: MovieCardProps)
     
     const [isFavourite, setIsFavourite] = useState(false);
     const [favouriteId,setFavouriteId] = useState<number| null>(null);
-    const [loading,setLoading] = useState(false);
+    //const [loading,setLoading] = useState(false);
   
-    const style = {
-    width: "100%",
-    height: "100%",
-    objectFit: "contain",
-  };
+   
 
   // Check if movie is already favourited
   useEffect(()=>{
@@ -65,7 +61,11 @@ export const MovieCard = ({ movieID, name, description, image }: MovieCardProps)
       <h1 className="text-base font-semibold text-slate-900">{name}</h1>
 
       <img
-        style={style}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+        }}
         src={image}
         alt={`${name} poster`}
         className="h-48 w-full"
