@@ -10,7 +10,7 @@ import { fetchFromTMDB } from "../api/tmdb";
  * @returns useTMDB custom hook
  */
 
-export const useTMDB = (endpoint, params = "", enabled = true) => {
+export const useTMDB = (endpoint:string, params = "", enabled = true) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
