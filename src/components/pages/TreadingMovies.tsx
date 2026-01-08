@@ -2,11 +2,10 @@
 import React from "react";
 import { MovieCard } from "../MovieCard";
 import { useTMDB } from "../../hooks/useTMDB";
-import type { Movie } from "../../types/Movie";
+import type { TMDBMovie } from "../../types/TMDBMovie";
 
 const TrendingMovies = () => {
-  // Fetch trending movies, typed as Movie[]
-  const movies = useTMDB<Movie[]>("/trending/movie/week") || [];
+  const movies = useTMDB<TMDBMovie[]>("/trending/movie/week");
 
   return (
     <>
