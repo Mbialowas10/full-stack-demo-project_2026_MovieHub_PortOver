@@ -12,16 +12,19 @@ export const MovieCard = ({ movieID, name, description, image }: MovieCardProps)
    
 
   // Check if movie is already favourited
-  useEffect(()=>{
-    fetch(`http://localhost:4445/favourites?movieId=${movieID}`)
+  useEffect(() => {
+  setIsFavourite(false);
+  setFavouriteId(null);
+
+  fetch(`http://localhost:4445/favourites?movieId=${movieID}`)
     .then(res => res.json())
     .then(data => {
-        if(data.length > 0 ){
-            setIsFavourite(true);
-            setFavouriteId(data[0].id)
-        }
+      if (data.length === 1) {
+        setIsFavourite(true);
+        setFavouriteId(data[0].id);
+      }
     });
-  }, [movieID]);
+}, [movieID]);
 
 
   // toggle favourite
