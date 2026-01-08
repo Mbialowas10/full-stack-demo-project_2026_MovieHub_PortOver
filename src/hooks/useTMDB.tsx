@@ -1,27 +1,21 @@
-// hooks/useTMDB.js
+// hooks/useTMDB.ts
 import { useEffect, useState } from "react";
 import { fetchFromTMDB } from "../api/tmdb";
 
-/**
- * 
- * @param endpoint 
- * @param params 
- * @param enabled 
- * @returns useTMDB custom hook
- */
-
-export const useTMDB = (endpoint:string, params = "", enabled = true) => {
-  const [data, setData] = useState([]);
+export const useTMDB = <T,>(
+  endpoint: string,
+  params = "",
+  enabled = true
+): T => {
+  const [data, setData] = useState<T>([] as T);
 
   useEffect(() => {
-    if (!enabled) return; // prevent unnecessary api calls
+    if (!enabled) return;
 
     fetchFromTMDB(endpoint, params)
-      .then(res => setData(res.results || []))
+      .then((res) => setData(res.results as T))
       .catch(console.error);
-  }, [endpoint, params, enabled]); // re-run useEffect when one of these dependencies changes
+  }, [endpoint, params, enabled]);
 
   return data;
 };
-
-
