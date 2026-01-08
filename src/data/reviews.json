@@ -63,14 +63,6 @@
       "review": "Fantasic",
       "movie": "Predator: Badlands",
       "createdAt": "2026-01-07T19:59:09.367Z"
-    },
-    {
-      "id": "922c",
-      "name": "Jennifer",
-      "rating": "3",
-      "review": "okay",
-      "movie": "Jaws",
-      "createdAt": "2026-01-07T21:55:55.845Z"
     }
   ]
 }
