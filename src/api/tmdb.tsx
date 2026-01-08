@@ -16,3 +16,5 @@ export const fetchFromTMDB = async (endpoint:string, params = ""): Promise<any> 
 
   return res.json();
 };
+
+

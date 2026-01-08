@@ -23,3 +23,5 @@ export const useTMDB = (endpoint:string, params = "", enabled = true) => {
 
   return data;
 };
+
+
