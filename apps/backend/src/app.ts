@@ -10,10 +10,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Define route
+// Define root route
+app.get("/", (_req, res) => {
+    res.json({ message: "Welcome to the Movie Hub API" });   
+});
+
+// health end point
 app.use("/api/health", healthRoutes);
 
-// Swagger UI
+// Swagger UI doc endpoint
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// mount movie routes
+app.use("/api/v1", movieRoutes);
+
 
 export default app;
