@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import healthRoutes from "./routes/health.routes";
+import healthRoutes from "./api/v1/routes/health.routes";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger/swagger";
 
@@ -22,7 +22,7 @@ app.use("/api/health", healthRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // mount movie routes
-app.use("/api/v1", movieRoutes);
+//app.use("/api/v1", movieRoutes);
 
 
 export default app;
