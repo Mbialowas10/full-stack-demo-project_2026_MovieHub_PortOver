@@ -2,6 +2,7 @@ import { TMDBMovie } from "@prisma/client";
 
 export const tmdbMovieSeedData: TMDBMovie[] = [
   {
+    id:0,
     tmdb_id: 550,
     original_title: "Fight Club",
     overview: `A ticking-time-bomb insomniac and a slippery soap salesman channel their inner 
@@ -9,6 +10,7 @@ demons and fight for survival in a world where the only way to be free is to fig
     poster_path: "/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg"
   },
   {
+    id:1,
     tmdb_id: 278,
     original_title: "The Shawshank Redemption",
     overview: `Framed in the 1940s for the double murder of his wife and her lover, upstanding 

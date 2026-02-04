@@ -13,9 +13,15 @@ datasource db {
 }
 
 model TMDBMovie {
-  id             Int    @id @default(autoincrement())
-  tmdb_id        Int    @unique
-  original_title String
-  overview       String
-  poster_path    String
+  id           Int      @id @default(autoincrement())
+  tmdb_id      Int      @unique
+  title        String
+  overview     String?
+  release_date DateTime?
+  poster_path  String?
+  popularity   Float?
+  vote_average Float?
+  vote_count   Int?
+  createdAt    DateTime @default(now())
 }
+
