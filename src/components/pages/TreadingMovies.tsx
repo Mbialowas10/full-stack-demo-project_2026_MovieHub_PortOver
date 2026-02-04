@@ -3,8 +3,8 @@ import React from "react";
 import { MovieCard } from "../MovieCard";
 import { useTMDB } from "../../hooks/useTMDB";
 import type { TMDBMovie } from "../../types/TMDBMovie";
-
 const TrendingMovies = () => {
+
   const movies = useTMDB<TMDBMovie[]>("/trending/movie/week");
 
   return (
