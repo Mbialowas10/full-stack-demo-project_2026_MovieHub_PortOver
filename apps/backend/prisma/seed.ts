@@ -1,10 +1,10 @@
 import "dotenv/config";
-
-import { PrismaClient } from "@prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg";
-
+import {prisma} from "../src/db/prisma";
 import { fetchFromTMDB } from "./tmdb";
+
+/**
+ *  Seed script to populate the database with TMDB movies.
+ */
 
 type TMDBMovieResponse = {
   page: number;
@@ -24,20 +24,7 @@ type TMDBMovieDTO = {
   vote_count: number;
 };
 
-function getPrisma() {
-  const databaseUrl = process.env.DATABASE_URL;
-  if (!databaseUrl) {
-    throw new Error("DATABASE_URL is not set.");
-  }
 
-  const pool = new Pool({ connectionString: databaseUrl });
-
-  return new PrismaClient({
-    adapter: new PrismaPg(pool),
-  });
-}
-
-const prisma = getPrisma();
 
 async function main() {
   console.log("🎬 Fetching TMDB movies...");

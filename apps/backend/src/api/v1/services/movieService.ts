@@ -1,3 +1,6 @@
+import {  TMDBMovie } from "@prisma/client";
+import { prisma } from "../../../db/prisma";
+
 
 /**
  * Services access data from Prisma client or external APIs.
@@ -7,7 +10,9 @@
  *More general info on Prisma: https://www.prisma.io/docs/orm/overview/prisma-in-your-stack/rest
  */
 
- export const fetchAllMovies = async (): Promise<Movie[]> => {
+
+ 
+ export const fetchAllMovies = async (): Promise<TMDBMovie[]> => {
     // get all records from Movie Table
-    return prisma.term.findMany();
+    return prisma.tMDBMovie.findMany();
  }

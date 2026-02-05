@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { fetchAllMovies } from "../services/movieService";
 
 /**
  * Controller methods used to determine how to handle requests for movie routes/requests.
@@ -10,9 +11,12 @@ export const getAllMovies = async(
     _next: NextFunction
 ): Promise<void> => {
     try{
-        const movies = await fetchMoviesFromService();
+        const movies = await fetchAllMovies();
         res.json({ movies });
     }
-    res.json({ movies: ["Movie 1", "Movie 2", "Movie 3"] });
+    catch(error){
+        console.error("Error fetching movies:", error);
+        res.status(500).json({ error: "Failed to fetch movies" });
+    }
 
 }
