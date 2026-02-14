@@ -3,15 +3,24 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { MovieCardProps } from "../types/MovieCardProps";
 
+
 export const MovieCard = ({ movie }: MovieCardProps) => {
-  const { id, original_title, overview, poster_path } = movie;
+  const { 
+    id, 
+    original_title, 
+    overview, 
+    poster_path,
+    popularity,
+    vote_average,
+    vote_count,
+    release_date } = movie; // destructure movie props
 
   const image = poster_path
     ? `https://image.tmdb.org/t/p/w500${poster_path}`
     : "/placeholder.png";
 
-  const [isFavourite, setIsFavourite] = useState(false);
-  const [dbId, setDbId] = useState<number | null>(null);
+  const [isFavourite, setIsFavourite] = useState(false); // not initially favourited or added to DB
+  const [dbId, setDbId] = useState<number | null>(null); 
 
   // Check if the movie is already saved in the database
   useEffect(() => {
@@ -21,7 +30,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
         const data = await res.json();
 
         if (data.movies && data.movies.length > 0) {
-          setIsFavourite(true);
+          setIsFavourite(true); // found in database, mark as favourite
           setDbId(data.movies[0].id); // store database ID for deletion
         }
       } catch (err) {
@@ -43,7 +52,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
         setIsFavourite(false);
         setDbId(null);
       } else {
-        // Add movie to DB
+        // Movie does not exist in DB, so add it
         const res = await fetch(`http://localhost:3000/api/v1/movies`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -52,6 +61,10 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
             title: original_title,
             overview,
             poster_path,
+            popularity:popularity,
+            vote_average:vote_average,
+            vote_count:vote_count,
+            release_date:release_date
           }),
         });
 

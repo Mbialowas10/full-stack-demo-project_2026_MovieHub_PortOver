@@ -23,6 +23,7 @@ const  App = () => {
     <Route path="/" element={<Layout />}>
       
       {/* A Route just loads a component when path visited. */}
+      {/* TrendingMovies - fetches trending shows from TMDB api*/}
       <Route index element={<TrendingMovies />}/>
       
       <Route path="search" element={

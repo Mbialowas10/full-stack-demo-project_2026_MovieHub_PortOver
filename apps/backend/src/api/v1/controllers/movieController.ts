@@ -33,9 +33,18 @@ export const getAllMovies = async (req: Request, res: Response, _next: NextFunct
 // POST /movies
 export const createMovie = async (req: Request, res: Response, _next: NextFunction) => {
   try {
-    const { tmdb_id, title, overview, poster_path } = req.body;
+    const { 
+        tmdb_id, 
+        title, 
+        overview, 
+        poster_path,
+        popularity,
+        vote_average,
+        vote_count,
+        release_date
+     } = req.body;
 
-    const createdMovie = await insertMovie({ tmdb_id, title, overview, poster_path });
+    const createdMovie = await insertMovie({ tmdb_id, title, overview, poster_path, popularity, vote_average, vote_count, release_date });
 
     res.status(201).json({ message: "Movie created successfully", createdMovie });
   } catch (error) {
