@@ -12,14 +12,15 @@ const TrendingMovies = () => {
       {movies.map((movie) => (
         <MovieCard
           key={movie.id}
-          movieID={movie.id}
-          name={movie.original_title}
-          description={movie.overview}
-          image={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-              : "/placeholder.png" // fallback if no poster
-          }
+          movie={movie}
+          // movieID={movie.id}
+          // name={movie.original_title}
+          // description={movie.overview}
+          // image={
+          //   movie.poster_path
+          //     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+          //     : "/placeholder.png" // fallback if no poster
+          // }
         />
       ))}
     </>

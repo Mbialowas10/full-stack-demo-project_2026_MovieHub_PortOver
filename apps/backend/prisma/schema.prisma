@@ -23,7 +23,6 @@ model TMDBMovie {
   vote_average Float?
   vote_count   Int?
   createdAt    DateTime @default(now())
-  favourites Favourite[]
   reviews    Review[]
 }
 
@@ -31,20 +30,8 @@ model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
   password  String
-  favourites Favourite[]
   reviews    Review[]
   createdAt DateTime   @default(now())
-}
-
-model Favourite {
-  id      Int   @id @default(autoincrement())
-  user    User  @relation(fields: [userId], references: [id])
-  userId  Int
-  movie   TMDBMovie @relation(fields: [movieId], references: [id])
-  movieId Int
-  createdAt DateTime @default(now())
-
-  @@unique([userId, movieId]) // prevents duplicate favourites
 }
 
 model Review {
