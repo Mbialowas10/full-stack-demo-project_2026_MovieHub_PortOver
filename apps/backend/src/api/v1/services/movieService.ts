@@ -33,7 +33,7 @@ export const insertMovie = async (movieData: any) => {
   return prisma.tMDBMovie.create({
     data: {
       tmdb_id: movieData.tmdb_id,
-      title: movieData.original_title ?? "no title", // map correctly
+      title: movieData.title ?? "no title", // map correctly
       overview: movieData.overview ?? null,
       release_date: movieData.release_date
         ? new Date(movieData.release_date)
