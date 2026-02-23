@@ -1,4 +1,4 @@
-import { Prisma, TMDBMovie } from "@prisma/client";
+import { TMDBMovie } from "@prisma/client";
 import { prisma } from "../../../db/prisma";
 
 /**
@@ -29,10 +29,22 @@ export const fetchMovieByTmdbId = async (tmdb_id: number): Promise<TMDBMovie | n
 /**
  * Insert a new movie
  */
-export const insertMovie = async (movieData: Prisma.TMDBMovieCreateInput): Promise<TMDBMovie> => {
-  return prisma.tMDBMovie.create({ data: movieData });
+export const insertMovie = async (movieData: any) => {
+  return prisma.tMDBMovie.create({
+    data: {
+      tmdb_id: movieData.tmdb_id,
+      title: movieData.original_title ?? "no title", // map correctly
+      overview: movieData.overview ?? null,
+      release_date: movieData.release_date
+        ? new Date(movieData.release_date)
+        : null,
+      poster_path: movieData.poster_path ?? null,
+      popularity: movieData.popularity ?? null,
+      vote_average: movieData.vote_average ?? null,
+      vote_count: movieData.vote_count ?? null,
+    }
+  });
 };
-
 /**
  * Delete a movie by database ID
  */
