@@ -2,9 +2,13 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { MovieCardProps } from "../types/MovieCardProps";
+import { useUser } from "@clerk/clerk-react";
 
 
 export const MovieCard = ({ movie }: MovieCardProps) => {
+
+  const { user } = useUser();
+
   const { 
     id, 
     original_title, 
@@ -43,39 +47,45 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
 
   // Toggle favourite
   const handleBtnClick = async () => {
-    try {
-      if (isFavourite && dbId) {
-        // Delete movie from DB
-        await fetch(`http://localhost:3000/api/v1/movies/${dbId}`, {
-          method: "DELETE",
-        });
-        setIsFavourite(false);
-        setDbId(null);
-      } else {
-        // Movie does not exist in DB, so add it
-        const res = await fetch(`http://localhost:3000/api/v1/movies`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            tmdb_id: id,
-            title: original_title,
-            overview,
-            poster_path,
-            popularity:popularity,
-            vote_average:vote_average,
-            vote_count:vote_count,
-            release_date:release_date
-          }),
-        });
+  if (!user) {
+    alert("Please login");
+    return;
+  }
 
-        const data = await res.json();
-        setIsFavourite(true);
-        setDbId(data.createdMovie.id); // store returned DB ID
-      }
-    } catch (err) {
-      console.error("Error toggling favourite:", err);
-    }
-  };
+  try {
+    // 1️⃣ Ensure movie exists
+    const movieRes = await fetch("http://localhost:3000/api/v1/movies", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tmdb_id: id,
+        title: original_title,
+        overview,
+        poster_path,
+        popularity,
+        vote_average,
+        vote_count,
+        release_date
+      }),
+    });
+
+    const movieData = await movieRes.json();
+    const movieDbId = movieData.createdMovie.id;
+
+    // 2️⃣ Add to favorites (NO userId sent)
+    await fetch("http://localhost:3000/api/v1/favourites", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        movieId: movieDbId,
+      }),
+    });
+
+    setIsFavourite(true);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <div className="w-lg mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-lg">
