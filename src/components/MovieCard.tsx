@@ -2,11 +2,15 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { MovieCardProps } from "../types/MovieCardProps";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
+
+
+
+
 
 
 export const MovieCard = ({ movie }: MovieCardProps) => {
-
+  const { getToken } = useAuth();
   const { user } = useUser();
 
   const { 
@@ -53,10 +57,15 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
   }
 
   try {
+     // Get Clerk token for protected request
+    const token = await getToken();
     // 1️⃣ Ensure movie exists
     const movieRes = await fetch("http://localhost:3000/api/v1/movies", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json" 
+      },
       body: JSON.stringify({
         tmdb_id: id,
         title: original_title,

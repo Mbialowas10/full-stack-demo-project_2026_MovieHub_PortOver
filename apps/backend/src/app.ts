@@ -1,29 +1,37 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import healthRoutes from "./api/v1/routes/health.routes";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger/swagger";
-import movieRoutes from "./api/v1/routes/movieRoutes"
+import movieRoutes from "./api/v1/routes/movieRoutes";
 
-// Initialize Express app
+dotenv.config(); // Load .env first
+
 const app = express();
 
-app.use(cors());
+// Middleware
+app.use(
+    cors({
+    origin: "http://localhost:5173", // your frontend URL
+    credentials: true, // if sending cookies
+  })
+);
 app.use(express.json());
 
-// Define root route
+// Root route
 app.get("/", (_req, res) => {
-    res.json({ message: "Welcome to the Movie Hub API" });   
+  res.json({ message: "Welcome to the Movie Hub API" });
 });
 
-// health end point
+// Health route
 app.use("/api/health", healthRoutes);
 
-// Swagger UI doc endpoint
+// Swagger docs
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// mount movie routes
+// Mount movie routes
 app.use("/api/v1", movieRoutes);
 
-
+// Export app
 export default app;
