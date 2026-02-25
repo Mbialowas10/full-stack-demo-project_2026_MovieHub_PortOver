@@ -15,6 +15,30 @@
       "image": "https://image.tmdb.org/t/p/w500/65Jr1JAgWlu9em8zHhAfrNJJQBt.jpg",
       "m_favourited": true,
       "createdAt": "2026-01-08T17:00:29.874Z"
+    },
+    {
+      "id": "7134",
+      "movieId": 578,
+      "m_name": "Jaws",
+      "image": "https://image.tmdb.org/t/p/w500/tjbLSFwi0I3phZwh8zoHWNfbsEp.jpg",
+      "m_favourited": true,
+      "createdAt": "2026-02-02T17:31:17.823Z"
+    },
+    {
+      "id": "0512",
+      "movieId": 514492,
+      "m_name": "Jaws",
+      "image": "https://image.tmdb.org/t/p/w500/n29QyzfangOxBlNWtfukNXXu9YQ.jpg",
+      "m_favourited": true,
+      "createdAt": "2026-02-02T17:45:25.187Z"
+    },
+    {
+      "id": "6f0d",
+      "movieId": 1168190,
+      "m_name": "The Wrecking Crew",
+      "image": "https://image.tmdb.org/t/p/w500/gbVwHl4YPSq6BcC92TQpe7qUTh6.jpg",
+      "m_favourited": true,
+      "createdAt": "2026-02-03T13:53:35.657Z"
     }
   ]
 }
