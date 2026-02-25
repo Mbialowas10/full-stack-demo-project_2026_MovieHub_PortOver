@@ -34,14 +34,7 @@ const SearchMovies = () => {
       {movies.map((movie) => (
         <MovieCard
           key={movie.id}
-<<<<<<< HEAD
-          movieID={movie.id}
-          name={movie.original_title}
-          description={movie.overview}
-          image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-=======
           movie={movie}
->>>>>>> clerk
         />
       ))}
     </>
