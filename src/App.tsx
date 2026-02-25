@@ -6,9 +6,10 @@ import TrendingMovies from "./components/pages/TreadingMovies";
 import SearchMovies from "./components/pages/SearchMovies";
 import Favourites from "./components/pages/Favourites";
 import Reviews from "./components/pages/Reviews";
-import Profile from "./components/pages/Profile";
+import Profile from "./components/pages/SignIn";
 import {ErrorBoundary} from "./components/ErrorBoundary";
 import {LeaveReview} from "./components/LeaveReview"
+import SignInPage from "./components/pages/SignIn";
 
 
 /**
@@ -34,9 +35,9 @@ const  App = () => {
     
       <Route path="favourites" element={<Favourites/>}/>
       <Route path="reviews" element={<Reviews/>} />
-      <Route path="profile" element={<Profile />} />
       <Route path="reviews/new" element={<LeaveReview />} />
       <Route path="search/reviews/new" element={<LeaveReview />}/>
+      <Route path="login" element={<SignInPage />} />
     </Route>
   </Routes>
  
