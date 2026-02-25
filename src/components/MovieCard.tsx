@@ -57,14 +57,12 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
   }
 
   try {
-     // Get Clerk token for protected request
     const token = await getToken();
-    // 1️⃣ Ensure movie exists
-    const movieRes = await fetch("http://localhost:3000/api/v1/movies", {
+    const res = await fetch("http://localhost:3000/api/v1/favourites", {
       method: "POST",
-      headers: { 
+      headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json" 
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         tmdb_id: id,
@@ -74,25 +72,15 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
         popularity,
         vote_average,
         vote_count,
-        release_date
+        release_date,
       }),
     });
 
-    const movieData = await movieRes.json();
-    const movieDbId = movieData.createdMovie.id;
-
-    // 2️⃣ Add to favorites (NO userId sent)
-    await fetch("http://localhost:3000/api/v1/favourites", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        movieId: movieDbId,
-      }),
-    });
-
-    setIsFavourite(true);
+    const data = await res.json();
+    setIsFavourite(data.isFavourite);
+    if (data.favouriteId) setDbId(data.favouriteId);
   } catch (err) {
-    console.error(err);
+    console.error("Error toggling favourite:", err);
   }
 };
 

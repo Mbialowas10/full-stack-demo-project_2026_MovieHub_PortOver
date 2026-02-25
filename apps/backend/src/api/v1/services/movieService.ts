@@ -29,22 +29,48 @@ export const fetchMovieByTmdbId = async (tmdb_id: number): Promise<TMDBMovie | n
 /**
  * Insert a new movie
  */
-export const insertMovie = async (movieData: any) => {
-  return prisma.tMDBMovie.create({
-    data: {
-      tmdb_id: movieData.tmdb_id,
-      title: movieData.title ?? "no title", // map correctly
-      overview: movieData.overview ?? null,
-      release_date: movieData.release_date
-        ? new Date(movieData.release_date)
-        : null,
-      poster_path: movieData.poster_path ?? null,
-      popularity: movieData.popularity ?? null,
-      vote_average: movieData.vote_average ?? null,
-      vote_count: movieData.vote_count ?? null,
-    }
+
+interface MovieInput {
+  tmdb_id: number;
+  title: string;
+  overview: string;
+  poster_path: string;
+  popularity: number;
+  vote_average: number;
+  vote_count: number;
+  release_date: string;
+}
+
+export const insertOrGetMovie = async (movie: MovieInput) => {
+  // Check if movie already exists
+  let existing = await prisma.tMDBMovie.findUnique({
+    where: { tmdb_id: movie.tmdb_id },
   });
+
+  if (existing) return existing;
+
+  // Convert release_date to Date
+  const releaseDate = movie.release_date
+    ? new Date(`${movie.release_date}T00:00:00Z`)
+    : new Date();
+
+  // Create if not exists
+  const createdMovie = await prisma.tMDBMovie.create({
+    data: {
+      tmdb_id: movie.tmdb_id,
+      title: movie.title,
+      overview: movie.overview,
+      poster_path: movie.poster_path,
+      popularity: movie.popularity,
+      vote_average: movie.vote_average,
+      vote_count: movie.vote_count,
+      release_date: releaseDate,
+    },
+  });
+
+  return createdMovie;
 };
+
 /**
  * Delete a movie by database ID
  */

@@ -12,6 +12,6 @@
         "@shared/*": ["../../shared/*"]
       }
     },
-    "include": ["src/**/*", "tests/**/*", "types", "global.d.ts", "api/index.ts"],
+    "include": ["src/**/*", "tests/**/*", "types", "global.d.ts", "api/index.ts","src/types"],
     "exclude": ["node_modules", "dist"]
 }

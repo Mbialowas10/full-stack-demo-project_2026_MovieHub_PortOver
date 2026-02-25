@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import {
   fetchAllMovies,
   fetchMovieByTmdbId,
-  insertMovie,
+  insertOrGetMovie,
   deleteMovie,
 } from "../services/movieService";
 
@@ -31,22 +31,10 @@ export const getAllMovies = async (req: Request, res: Response, _next: NextFunct
 };
 
 // POST /movies
-export const createMovie = async (req: Request, res: Response, _next: NextFunction) => {
+export const createMovie = async (req: Request, res: Response) => {
   try {
-    const { 
-        tmdb_id, 
-        title, 
-        overview, 
-        poster_path,
-        popularity,
-        vote_average,
-        vote_count,
-        release_date
-     } = req.body;
-
-    const createdMovie = await insertMovie({ tmdb_id, title, overview, poster_path, popularity, vote_average, vote_count, release_date });
-
-    res.status(201).json({ message: "Movie created successfully", createdMovie });
+    const createdMovie = await insertOrGetMovie(req.body);
+    res.status(201).json({ message: "Movie created or retrieved", createdMovie });
   } catch (error) {
     console.error("Error creating movie:", error);
     res.status(500).json({ error: "Failed to create movie" });

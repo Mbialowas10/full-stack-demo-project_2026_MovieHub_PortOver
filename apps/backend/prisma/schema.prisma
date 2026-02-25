@@ -13,8 +13,8 @@ datasource db {
 }
 
 model TMDBMovie {
-  id           Int      @id @default(autoincrement())
-  tmdb_id      Int      @unique
+  id           Int       @id @default(autoincrement())
+  tmdb_id      Int       @unique
   title        String
   overview     String?
   release_date DateTime?
@@ -22,29 +22,39 @@ model TMDBMovie {
   popularity   Float?
   vote_average Float?
   vote_count   Int?
-  createdAt    DateTime @default(now())
-  reviews    Review[]
-  favouritedBy   User[]   @relation("UserFavouriteMovies")
+  createdAt    DateTime  @default(now())
+  reviews      Review[]
 
+  favouritedBy User[]      @relation("UserFavouriteMovies")
+  favourites   Favourite[] // back-relation to Favourite
+}
+
+model Favourite {
+  id        Int       @id @default(autoincrement())
+  userId    String
+  movieId   Int
+  movie     TMDBMovie @relation(fields: [movieId], references: [id])
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, movieId])
 }
 
 model User {
-  id        String     @id // clerk user id
-  email     String     @unique
+  id        String      @id // clerk user id
+  email     String      @unique
   password  String
   favorites TMDBMovie[] @relation("UserFavouriteMovies")
-  reviews    Review[]
-  createdAt DateTime   @default(now())
+  reviews   Review[]
+  createdAt DateTime    @default(now())
 }
 
 model Review {
-  id      Int   @id @default(autoincrement())
-  user    User  @relation(fields: [userId], references: [id])
-  userId  String
-  movie   TMDBMovie @relation(fields: [movieId], references: [id])
-  movieId Int
-  rating  Int
-  comment String
-  createdAt DateTime @default(now())
+  id        Int       @id @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  movie     TMDBMovie @relation(fields: [movieId], references: [id])
+  movieId   Int
+  rating    Int
+  comment   String
+  createdAt DateTime  @default(now())
 }
-

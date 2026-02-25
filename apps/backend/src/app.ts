@@ -5,6 +5,8 @@ import healthRoutes from "./api/v1/routes/health.routes";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger/swagger";
 import movieRoutes from "./api/v1/routes/movieRoutes";
+import favouriteRoutes from "./api/v1/routes/favouriteRoutes";
+
 
 dotenv.config(); // Load .env first
 
@@ -32,6 +34,10 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Mount movie routes
 app.use("/api/v1", movieRoutes);
+
+app.use("/api/v1/favourites", favouriteRoutes);
+
+
 
 // Export app
 export default app;
