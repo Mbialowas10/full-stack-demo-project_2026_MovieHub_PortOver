@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { fetchFromTMDB } from "../api/tmdb";
 
+<<<<<<< HEAD
+=======
 /**
  * Description: Custom hook to fetch data from TMDB API
  * @param endpoint
@@ -9,6 +11,7 @@ import { fetchFromTMDB } from "../api/tmdb";
  * @param enabled
  * @returns Generic type T
  */
+>>>>>>> clerk
 export const useTMDB = <T,>(
   endpoint: string,
   params = "",
