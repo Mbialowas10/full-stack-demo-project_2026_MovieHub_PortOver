@@ -87,6 +87,36 @@ export const getUserFavourites = async (req: Request, res: Response) => {
 };
 
 
+export const checkFavouriteStatus = async (req: ClerkRequest, res: Response) => {
+  try {
+    const userId = req.auth?.userId;
+    const tmdbId = Number(req.params.tmdbId);
+
+    if (!userId) return res.json({ isFavourite: false, isStoredLocally: false });
+
+    const movie = await prisma.tMDBMovie.findUnique({
+      where: { tmdb_id: tmdbId },
+    });
+
+    if (!movie) {
+      return res.json({ isFavourite: false, isStoredLocally: false });
+    }
+
+    const favourite = await prisma.favourite.findUnique({
+      where: { userId_movieId: { userId, movieId: movie.id } },
+    });
+
+    res.json({
+      isFavourite: !!favourite,
+      isStoredLocally: true,
+      favouriteId: favourite?.id
+    });
+  } catch (err) {
+    console.error("Error checking favourite status:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 export const toggleFavourite = async (req: ClerkRequest, res: Response) => {
   try {
     const userId = req.auth?.userId;
@@ -97,6 +127,13 @@ export const toggleFavourite = async (req: ClerkRequest, res: Response) => {
     if (!tmdb_id) return res.status(400).json({ error: "tmdb_id is required" });
 
     console.log(`Toggling favourite for user ${userId} and movie ${tmdb_id}`);
+
+    // 0️⃣ Ensure user exists in our DB
+    await prisma.user.upsert({
+      where: { id: userId },
+      update: {},
+      create: { id: userId },
+    });
 
     // 1️⃣ Upsert movie
     const movie = await prisma.tMDBMovie.upsert({

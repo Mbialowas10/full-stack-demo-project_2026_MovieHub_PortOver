@@ -1,7 +1,10 @@
 {
   "files": [],
   "references": [
+<<<<<<< HEAD
+=======
     {"path": "./apps/backend"},
+>>>>>>> clerk
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ]

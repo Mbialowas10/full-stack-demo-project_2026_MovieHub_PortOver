@@ -11,6 +11,8 @@ export const addReview = async (
     overview?: string;
     poster_path?: string;
     release_date?: Date;
+    rating?: number;
+    comment?: string;
   }
 ) => {
   // 1. Ensure user exists
@@ -31,25 +33,27 @@ export const addReview = async (
   });
 
   // 3. Create review
-  const favourite = await prisma.review.create({
+  const review = await prisma.review.create({
     data: {
       userId,
       movieId: movie.id,
+      rating: movieData.rating || 0,
+      comment: movieData.comment || "",
     },
   });
 
-  return favourite;
+  return review;
 };
 
 /**
  * Removes a review
  */
-export const removeR = async (userId: string, tmdbId: number) => {
+export const removeReview = async (userId: string, tmdbId: number) => {
   // 1. Find the movie
   const movie = await prisma.tMDBMovie.findUnique({ where: { tmdb_id: tmdbId } });
   if (!movie) throw new Error(`Movie ${tmdbId} not found`);
 
-  // 2. Delete favourite
+  // 2. Delete review
   return prisma.review.delete({
     where: {
       userId_movieId: {
