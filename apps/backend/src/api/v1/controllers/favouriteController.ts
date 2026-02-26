@@ -141,9 +141,18 @@ export const toggleFavourite = async (req: Request, res: Response) => {
 
     // 2. Upsert movie
     const movie = await prisma.tMDBMovie.upsert({
-      where: { tmdb_id },
+      where: { tmdb_id: Number(tmdb_id) },
       update: {}, // if movie already exists, we don't need to update any fields for this use case, just return the  movie record
-      create: { tmdb_id, title, overview, poster_path, popularity, vote_average, vote_count, release_date: release_date ? new Date(release_date) : undefined },
+      create: {
+        tmdb_id: Number(tmdb_id),
+        title,
+        overview,
+        poster_path,
+        popularity: popularity ? Number(popularity) : null,
+        vote_average: vote_average ? Number(vote_average) : null,
+        vote_count: vote_count ? Number(vote_count) : null,
+        release_date: release_date ? new Date(release_date) : null
+      },
     });
 
     // 3. Check if favourite exists

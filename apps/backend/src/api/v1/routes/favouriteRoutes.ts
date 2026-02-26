@@ -8,7 +8,7 @@ const router = Router();
 router.get("/user/:userId", favouriteController.getUserFavourites);
 
 // Check if a specific movie is favourited by current user
-router.get("/status/:tmdbId", requireAuth, favouriteController.checkFavouriteStatus);
+router.get("/status/:tmdbId", favouriteController.checkFavouriteStatus);
 
 // Toggle favourite (protected) - handles both add and remove
 router.post("/", requireAuth, favouriteController.toggleFavourite);

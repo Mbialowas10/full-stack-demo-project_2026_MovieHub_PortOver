@@ -21,14 +21,14 @@ export const addReview = async (
 
   // 2️⃣ Upsert movie
   const movie = await prisma.tMDBMovie.upsert({
-    where: { tmdb_id: movieData.tmdb_id },
+    where: { tmdb_id: Number(movieData.tmdb_id) },
     update: {},
     create: {
-      tmdb_id: movieData.tmdb_id,
+      tmdb_id: Number(movieData.tmdb_id),
       title: movieData.title,
       overview: movieData.overview,
       poster_path: movieData.poster_path,
-      release_date: movieData.release_date,
+      release_date: movieData.release_date ? new Date(movieData.release_date) : null,
     },
   });
 
