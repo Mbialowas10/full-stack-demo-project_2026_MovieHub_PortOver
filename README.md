@@ -18,3 +18,6 @@ replace xxxxxx with TMDB api key
 ```json-server --watch .\xxxx.json --port 4444```
 In this project json files are stored inside the data directory. json-server
 listens to whatever port you specify, here we used 4444.
+
+### Some Notes about the app... ###
+

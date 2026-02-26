@@ -4,10 +4,10 @@ import Footer from "./footer/Footer";
 
 /**
  *  Layout - A template structure for all pages in website to follow
- *  ie. each page has a HeaderNav bar at top of page
+ *  ie. each page has a HeaderNav bar at top of page, page body in middle and Footer at bottom of page.
+ *  Outlet component is where page body gets injected into.
  * @returns 
  */
-// outlet component has pages injected dynamically
 export default function Layout() {
     return(
         <>

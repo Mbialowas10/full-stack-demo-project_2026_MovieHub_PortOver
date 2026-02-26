@@ -7,11 +7,17 @@ import { useUser, useAuth } from "@clerk/clerk-react";
 
 
 
-
+/**
+ * MovieCard component displays individual movie details and allows users to add/remove from favourites
+ * and to initially save to a local postgreSQL database. 
+ * TODO - provide a link to leave a review for the movie.
+ * @param param0 
+ * @returns 
+ */
 
 export const MovieCard = ({ movie }: MovieCardProps) => {
-  const { getToken } = useAuth();
-  const { user } = useUser();
+  const { getToken } = useAuth(); // Get clerk auth token, used for authenticated API requests 
+  const { user } = useUser(); // get authenticated user info from clerk
 
   const {
     id,
@@ -26,13 +32,15 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
     vote_count,
     release_date } = movie as any; // destructure movie props
 
-  const displayTitle = original_title || title || name;
+  // to ensure we don't have an empty title field, as TMDB can return different fields for movies vs tv shows
+  const displayTitle = original_title || title || name; 
   const tmdbId = tmdb_id || id; // Handle both TMDB API and local DB objects
 
   const image = poster_path
     ? `https://image.tmdb.org/t/p/w500${poster_path}`
     : "/placeholder.png";
-
+  
+  // state level variables to track if the movie is favourited, if it's stored locally in our DB, and the local DB ID for reference  
   const [isFavourite, setIsFavourite] = useState(false);
   const [isStoredLocally, setIsStoredLocally] = useState(false);
   const [dbId, setDbId] = useState<number | null>(null);
