@@ -4,7 +4,7 @@ import * as reviewService from "../services/reviewService";
 // Add or update review
 export const addReview = async (req: any, res: Response) => {
   try {
-    const userId = req.auth?.userId;
+    const userId = req.auth().userId;
     const { movie, rating, comment } = req.body;
 
     if (!userId) {
@@ -36,7 +36,7 @@ export const getAllReviews = async (_req: Request, res: Response) => {
 // Remove review (SECURE)
 export const removeReview = async (req: any, res: Response) => {
   try {
-    const userId = req.auth?.userId;
+    const userId = req.auth().userId;
     const tmdbId = Number(req.params.tmdbId);
 
     if (!userId) {
