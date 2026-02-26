@@ -76,7 +76,11 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
 
   try {
     const token = await getToken();
-    const res = await fetch("http://localhost:3000/api/v1/favourites", {
+
+    // debug auth token retrieval from clerk - ensure we have a valid token before making the API request
+    console.log("Auth token:", token);
+
+    const res = await fetch("http://localhost:3000/api/v1/favourites/toggle", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -95,9 +99,11 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
     });
 
     const data = await res.json();
+
     setIsFavourite(data.isFavourite);
     if (data.isFavourite) setIsStoredLocally(true);
     if (data.favouriteId) setDbId(data.favouriteId);
+
   } catch (err) {
     console.error("Error toggling favourite:", err);
   }

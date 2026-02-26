@@ -1,23 +1,10 @@
 import { Router } from "express";
 import { requireAuth } from "@clerk/express";
-import * as favouriteController from "../controllers/favouriteController";
+import { toggleFavourite, getFavouriteStatus } from "../controllers/favouriteController";
 
 const router = Router();
 
-// Get favourites for a user (public)
-router.get("/user/:userId", favouriteController.getUserFavourites);
-
-// Check if a specific movie is favourited by current user
-router.get("/status/:tmdbId", requireAuth, favouriteController.checkFavouriteStatus);
-
-// Toggle favourite (protected) - handles both add and remove
-router.post("/", requireAuth, favouriteController.toggleFavourite);
-
-// Remove favourite (protected)
-router.delete(
-  "/:id",
-  requireAuth,
-  favouriteController.removeFavourite
-);
+router.post("/toggle", requireAuth, toggleFavourite);
+router.get("/status/:tmdbId", requireAuth, getFavouriteStatus);
 
 export default router;

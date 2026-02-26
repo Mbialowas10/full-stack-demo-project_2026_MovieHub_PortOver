@@ -52,3 +52,4 @@ export const removeMovie = async (req: Request, res: Response, _next: NextFuncti
     res.status(500).json({ error: "Failed to delete movie" });
   }
 };
+export { insertOrGetMovie };
