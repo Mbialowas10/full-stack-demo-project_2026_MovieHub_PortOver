@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-const Favourites = () => {
-    return (
-        <h1 style={{textAlign:"center", margin: "auto"}}>Favourites Page...</h1>
-    );
-}
-
-=======
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { MovieCard } from "../MovieCard";
@@ -57,5 +49,4 @@ const Favourites = () => {
   );
 };
 
->>>>>>> clerk
 export default Favourites;
