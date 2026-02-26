@@ -8,7 +8,7 @@ import { prisma } from "../../../db/prisma";// make sure you export prisma insta
 // Add a favourite (protected)
 export const addFavourite = async (req: Request, res: Response) => {
   try {
-    const userId = req.auth?.userId;
+    const userId = (req as any).auth?.userId;
     if (!userId) return res.status(401).json({ error: "Unauthenticated" });
 
     const { movieId } = req.body;
@@ -36,7 +36,7 @@ export const addFavourite = async (req: Request, res: Response) => {
 // Remove a favourite (protected)
 export const removeFavourite = async (req: Request, res: Response) => {
   try {
-    const userId = req.auth?.userId;
+    const userId = (req as any).auth?.userId;
     if (!userId) return res.status(401).json({ error: "Unauthenticated" });
 
     const favId = Number(req.params.id);
@@ -92,7 +92,7 @@ export const getUserFavourites = async (req: Request, res: Response) => {
 
 export const checkFavouriteStatus = async (req: Request, res: Response) => {
   try {
-    const userId = req.auth?.userId;
+    const userId = (req as any).auth?.userId;
     const tmdbId = Number(req.params.tmdbId);
 
     // user must be authenticated to favourite a movie
