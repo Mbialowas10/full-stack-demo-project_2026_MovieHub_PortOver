@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { clerkMiddleware } from "@clerk/express";
 import dotenv from "dotenv";
 import healthRoutes from "./api/v1/routes/health.routes";
 import swaggerUi from "swagger-ui-express";
@@ -21,6 +22,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(clerkMiddleware());
 
 // Root route
 app.get("/", (_req, res) => {
