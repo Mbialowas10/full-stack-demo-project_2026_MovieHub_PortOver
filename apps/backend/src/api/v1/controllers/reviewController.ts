@@ -24,6 +24,15 @@ export const addReview = async (req: any, res: Response) => {
   }
 };
 
+export const getAllReviews = async (_req: Request, res: Response) => {
+  try {
+    const reviews = await reviewService.getAllReviews();
+    res.json(reviews);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 // Remove review (SECURE)
 export const removeReview = async (req: any, res: Response) => {
   try {
@@ -45,7 +54,7 @@ export const removeReview = async (req: any, res: Response) => {
 // Get user reviews
 export const getUserReviews = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.params.userId as string;
     const reviews = await reviewService.getUserReviews(userId);
     res.json(reviews);
   } catch (err: any) {

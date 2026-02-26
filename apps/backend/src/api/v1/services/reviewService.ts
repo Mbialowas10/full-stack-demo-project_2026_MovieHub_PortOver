@@ -13,8 +13,11 @@ export const addReview = async (
   comment: string
 ) => {
   // 1️⃣ Ensure user exists
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-  if (!user) throw new Error(`User ${userId} does not exist`);
+  await prisma.user.upsert({
+    where: { id: userId },
+    update: {},
+    create: { id: userId },
+  });
 
   // 2️⃣ Upsert movie
   const movie = await prisma.tMDBMovie.upsert({
@@ -86,7 +89,14 @@ export const getMovieReviews = async (tmdbId: number) => {
 
   return prisma.review.findMany({
     where: { movieId: movie.id },
-    include: { movie: true },
+    include: { movie: true, user: true },
+    orderBy: { createdAt: "desc" },
+  });
+};
+
+export const getAllReviews = async () => {
+  return prisma.review.findMany({
+    include: { movie: true, user: true },
     orderBy: { createdAt: "desc" },
   });
 };

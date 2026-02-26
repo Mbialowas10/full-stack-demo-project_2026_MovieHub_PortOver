@@ -1,43 +1,54 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth, useUser } from "@clerk/clerk-react";
 
 export const LeaveReview = () => {
+  const { getToken } = useAuth();
+  const { user } = useUser();
+  const navigate = useNavigate();
   const location = useLocation();
-  const { mname, image } = location.state || {};
-  const movieName = mname?.name || "";
-  const movieImage = image?.image || "";
 
-  const [name, setName] = useState("");
+  const { movie, image } = location.state || {};
+  const movieName = movie?.title || "";
+  const movieImage = image || "";
+
   const [rating, setRating] = useState("");
-  const [review, setReview] = useState("");
+  const [comment, setComment] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!user) {
+      alert("Please login to leave a review");
+      return;
+    }
+
     const reviewData = {
-      name,
-      rating,
-      review,
-      movie: movieName,
-      createdAt: new Date().toISOString(),
+      movie: movie,
+      rating: parseInt(rating),
+      comment: comment,
     };
 
-    {/** json server being used here for post request */}
     try {
-      const resp = await fetch("http://localhost:4000/reviews", {
+      const token = await getToken();
+      const resp = await fetch("http://localhost:3000/api/v1/reviews", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify(reviewData),
       });
       if (!resp.ok) throw new Error("Failed to post review");
       const savedReview = await resp.json();
       console.log("Saved:", savedReview);
 
-      setName("");
       setRating("");
-      setReview("");
+      setComment("");
+      navigate("/reviews");
     } catch (e) {
       console.error(e);
+      alert("Error submitting review");
     }
   };
 
@@ -55,18 +66,6 @@ export const LeaveReview = () => {
       {movieImage && (
         <img src={movieImage} alt={movieName} className="w-full h-auto rounded mb-4" />
       )}
-
-      <label className={styles.label}>
-        Your Name
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={styles.input}
-          placeholder="Who are you?"
-          required
-        />
-      </label>
 
       <label className={styles.label}>
         Rating
@@ -88,8 +87,8 @@ export const LeaveReview = () => {
       <label className={styles.label}>
         Review
         <textarea
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
           className={styles.textarea}
           placeholder="What did you think about the movie?"
           required
