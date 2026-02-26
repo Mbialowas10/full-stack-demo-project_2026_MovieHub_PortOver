@@ -43,7 +43,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
   // state level variables to track if the movie is favourited, if it's stored locally in our DB, and the local DB ID for reference  
   const [isFavourite, setIsFavourite] = useState(false);
   const [isStoredLocally, setIsStoredLocally] = useState(false);
-  const [dbId, setDbId] = useState<number | null>(null);
+  const [, setDbId] = useState<number | null>(null);
 
   // Check if the movie is already saved in the database and its favourite status
   useEffect(() => {
@@ -121,7 +121,19 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
         <NavLink
           to="/reviews/new"
           className="text-blue-600 hover:underline"
-          state={{ mname: displayTitle, image }}
+          state={{
+            movie: {
+              tmdb_id: tmdbId,
+              title: displayTitle,
+              overview,
+              poster_path,
+              popularity,
+              vote_average,
+              vote_count,
+              release_date
+            },
+            image
+          }}
         >
           Leave A Review...
         </NavLink>

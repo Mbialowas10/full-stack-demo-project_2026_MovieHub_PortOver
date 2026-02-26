@@ -5,7 +5,13 @@ import * as reviewController from "../controllers/reviewController";
 const router = Router();
 
 
-
+/**
+ * Get all reviews
+ */
+router.get(
+  "/",
+  reviewController.getAllReviews
+);
 
 /**
  * Create or update a review (must be logged in)
