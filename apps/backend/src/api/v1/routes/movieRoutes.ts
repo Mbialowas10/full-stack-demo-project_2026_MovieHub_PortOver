@@ -1,17 +1,16 @@
-import { Router, RequestHandler } from "express";
+import { Router} from "express";
 import * as movieController from "../controllers/movieController";
-import { ClerkExpressRequireAuth } from "@clerk/clerk-sdk-node";
+import { requireAuth } from "@clerk/express";
 
 const router: Router = Router();
 
-// Cast Clerk middleware to Express RequestHandler for TS
-const authMiddleware: RequestHandler = ClerkExpressRequireAuth() as unknown as RequestHandler;
+
 
 // Public route
 router.get("/movies", movieController.getAllMovies);
 
 // Protected routes
-router.post("/movies", authMiddleware, movieController.createMovie);
-router.delete("/movies/:id", authMiddleware, movieController.removeMovie);
+router.post("/movies", requireAuth, movieController.createMovie);
+router.delete("/movies/:id", requireAuth, movieController.removeMovie);
 
 export default router;

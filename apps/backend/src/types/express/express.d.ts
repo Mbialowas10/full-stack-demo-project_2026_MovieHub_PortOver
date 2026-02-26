@@ -1,7 +1,9 @@
-import { AuthObject } from "@clerk/clerk-sdk-node";
+import { Auth } from "@clerk/express";
 
-declare module "express-serve-static-core" {
-  interface Request {
-    auth?: AuthObject;
+declare global {
+  namespace Express {
+    interface Request {
+      auth?: Auth;
+    }
   }
 }

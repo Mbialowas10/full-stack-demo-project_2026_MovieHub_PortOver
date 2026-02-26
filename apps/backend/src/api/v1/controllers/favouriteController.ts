@@ -1,14 +1,12 @@
 import { Request, Response } from "express";
 import { prisma } from "../../../db/prisma";// make sure you export prisma instance
-import { AuthObject } from "@clerk/clerk-sdk-node";
+
 
 // Extend Request to include Clerk auth
-interface ClerkRequest extends Request {
-  auth?: AuthObject;
-}
+
 
 // Add a favourite (protected)
-export const addFavourite = async (req: ClerkRequest, res: Response) => {
+export const addFavourite = async (req: Request, res: Response) => {
   try {
     const userId = req.auth?.userId;
     if (!userId) return res.status(401).json({ error: "Unauthenticated" });
@@ -36,7 +34,7 @@ export const addFavourite = async (req: ClerkRequest, res: Response) => {
 };
 
 // Remove a favourite (protected)
-export const removeFavourite = async (req: ClerkRequest, res: Response) => {
+export const removeFavourite = async (req: Request, res: Response) => {
   try {
     const userId = req.auth?.userId;
     if (!userId) return res.status(401).json({ error: "Unauthenticated" });
@@ -86,12 +84,18 @@ export const getUserFavourites = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Check if a specific movie is favourited by the current user and if it's stored locally in our DB
+ * This endpoint is used by the frontend to determine the favourite status of a movie for the logged-in user
+ * It returns an object with isFavourite (boolean), isStoredLocally (boolean), and favouriteId (number | null)
+ */
 
-export const checkFavouriteStatus = async (req: ClerkRequest, res: Response) => {
+export const checkFavouriteStatus = async (req: Request, res: Response) => {
   try {
     const userId = req.auth?.userId;
     const tmdbId = Number(req.params.tmdbId);
 
+    // user must be authenticated to favourite a movie
     if (!userId) return res.json({ isFavourite: false, isStoredLocally: false });
 
     const movie = await prisma.tMDBMovie.findUnique({
@@ -107,7 +111,7 @@ export const checkFavouriteStatus = async (req: ClerkRequest, res: Response) => 
     });
 
     res.json({
-      isFavourite: !!favourite,
+      isFavourite: !!favourite, // !! converts to boolean - returns true if favourite exists, false if null
       isStoredLocally: true,
       favouriteId: favourite?.id
     });
@@ -117,9 +121,9 @@ export const checkFavouriteStatus = async (req: ClerkRequest, res: Response) => 
   }
 };
 
-export const toggleFavourite = async (req: ClerkRequest, res: Response) => {
+export const toggleFavourite = async (req: Request, res: Response) => {
   try {
-    const userId = req.auth?.userId;
+    const userId = (req as any).auth?.userId;
     if (!userId) return res.status(401).json({ error: "Unauthenticated" });
 
     const { tmdb_id, title, overview, poster_path, popularity, vote_average, vote_count, release_date } = req.body;
@@ -128,28 +132,28 @@ export const toggleFavourite = async (req: ClerkRequest, res: Response) => {
 
     console.log(`Toggling favourite for user ${userId} and movie ${tmdb_id}`);
 
-    // 0️⃣ Ensure user exists in our DB
+    // 1. Ensure user exists in our DB
     await prisma.user.upsert({
       where: { id: userId },
       update: {},
       create: { id: userId },
     });
 
-    // 1️⃣ Upsert movie
+    // 2. Upsert movie
     const movie = await prisma.tMDBMovie.upsert({
       where: { tmdb_id },
-      update: {},
+      update: {}, // if movie already exists, we don't need to update any fields for this use case, just return the  movie record
       create: { tmdb_id, title, overview, poster_path, popularity, vote_average, vote_count, release_date: release_date ? new Date(release_date) : undefined },
     });
 
-    // 2️⃣ Check if favourite exists
+    // 3. Check if favourite exists
     const existingFav = await prisma.favourite.findUnique({
       where: { userId_movieId: { userId, movieId: movie.id } },
     });
 
     if (existingFav) {
       console.log(`Removing favourite ${existingFav.id} for user ${userId}`);
-      // ✅ Remove favourite
+      // Remove favourite
       await prisma.favourite.delete({ where: { id: existingFav.id } });
       return res.json({ message: "Removed from favourites", isFavourite: false });
     } else {

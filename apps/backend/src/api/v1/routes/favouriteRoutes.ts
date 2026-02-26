@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ClerkExpressRequireAuth, ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
+import { requireAuth } from "@clerk/express";
 import * as favouriteController from "../controllers/favouriteController";
 
 const router = Router();
@@ -8,15 +8,15 @@ const router = Router();
 router.get("/user/:userId", favouriteController.getUserFavourites);
 
 // Check if a specific movie is favourited by current user
-router.get("/status/:tmdbId", ClerkExpressWithAuth() as unknown as any, favouriteController.checkFavouriteStatus);
+router.get("/status/:tmdbId", requireAuth, favouriteController.checkFavouriteStatus);
 
 // Toggle favourite (protected) - handles both add and remove
-router.post("/", ClerkExpressRequireAuth() as unknown as any, favouriteController.toggleFavourite);
+router.post("/", requireAuth, favouriteController.toggleFavourite);
 
 // Remove favourite (protected)
 router.delete(
   "/:id",
-  ClerkExpressRequireAuth() as unknown as any, // <-- cast here
+  requireAuth,
   favouriteController.removeFavourite
 );
 
