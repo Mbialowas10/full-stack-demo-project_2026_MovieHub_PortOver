@@ -76,6 +76,8 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
 
   try {
     const token = await getToken();
+    console.log(`Toggling favourite for movie ${displayTitle} (TMDB ID: ${tmdbId}) with token: ${token}`);
+    
     const res = await fetch("http://localhost:3000/api/v1/favourites", {
       method: "POST",
       headers: {

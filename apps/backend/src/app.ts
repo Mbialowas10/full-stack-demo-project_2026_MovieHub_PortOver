@@ -10,6 +10,10 @@ import favouriteRoutes from "./api/v1/routes/favouriteRoutes";
 import reviewRoutes from "./api/v1/routes/reviewRoutes";
 
 
+const morgan = require("morgan"); // for logging HTTP requests
+
+
+
 dotenv.config(); // Load .env first
 
 const app = express();
@@ -24,6 +28,7 @@ app.use(
 );
 app.use(express.json());
 app.use(clerkMiddleware());
+app.use(morgan("dev")); // Log HTTP requests in development
 
 // Root route
 app.get("/", (_req, res) => {
