@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 import { MovieCard } from "../MovieCard";
 
 const Favourites = () => {
   const { user } = useUser();
+  const { getToken } = useAuth();
   const [favourites, setFavourites] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -12,8 +13,12 @@ const Favourites = () => {
 
     const fetchFavourites = async () => {
       try {
+        const token = await getToken();
         const res = await fetch(
-          `http://localhost:3000/api/v1/favourites/user/${user.id}`
+          `http://localhost:3000/api/v1/favourites/user/${user.id}`,
+          {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          }
         );
         const data = await res.json();
         setFavourites(data.favourites || []);

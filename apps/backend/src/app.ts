@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { clerkMiddleware } from "@clerk/express";
 import healthRoutes from "./api/v1/routes/health.routes";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger/swagger";
@@ -9,18 +10,26 @@ import favouriteRoutes from "./api/v1/routes/favouriteRoutes";
 import reviewRoutes from "./api/v1/routes/reviewRoutes";
 
 
+const morgan = require("morgan"); // for logging HTTP requests
+
+
+
 dotenv.config(); // Load .env first
 
 const app = express();
 
 // Middleware
-app.use(
-    cors({
-    origin: "http://localhost:5173", // your frontend URL
-    credentials: true, // if sending cookies
-  })
-);
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
+app.use(clerkMiddleware());
+app.use(morgan("dev")); // Log HTTP requests in development
 
 // Root route
 app.get("/", (_req, res) => {
