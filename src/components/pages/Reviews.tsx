@@ -1,26 +1,54 @@
 import { useState, useEffect } from "react";
-import ReviewCard from  "../ReviewCard"
+import { useUser, useAuth } from "@clerk/clerk-react";
+import ReviewCard from "../ReviewCard";
 
 const Reviews = () => {
+  const { user } = useUser();
+  const { getToken } = useAuth();
   const [reviews, setReviews] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/reviews")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchReviews = async () => {
+      try {
+        const url = user
+          ? `http://localhost:3000/api/v1/reviews/user/${user.id}`
+          : "http://localhost:3000/api/v1/reviews";
+
+        const token = await getToken();
+        const headers: HeadersInit = {};
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        const res = await fetch(url, { headers });
+        const data = await res.json();
+
         if (Array.isArray(data)) {
           setReviews(data);
         } else {
           console.error("Data is not an array:", data);
           setReviews([]);
         }
-      })
-      .catch((err) => console.error(err));
-  }, []); // empty array = fetch once on mount
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, [user]);
+
+  if (loading) {
+    return <h1 className="text-center mt-10 text-lg">Loading reviews...</h1>;
+  }
 
   return (
     <div className="max-w-2xl mx-auto mt-8">
-      <h1 className="text-center text-2xl font-semibold mb-4">User Reviews</h1>
+      <h1 className="text-center text-2xl font-semibold mb-4">
+        {user ? "Your Reviews" : "Recent User Reviews"}
+      </h1>
       {reviews.length === 0 ? (
         <p className="text-center text-gray-500">No reviews yet.</p>
       ) : (

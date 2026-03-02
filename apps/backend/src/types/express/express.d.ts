@@ -1,9 +1,12 @@
-import { Auth } from "@clerk/express";
+// src/types/express.d.ts
+import "express-serve-static-core";
 
-declare global {
-  namespace Express {
-    interface Request {
-      auth?: Auth;
-    }
+declare module "express-serve-static-core" {
+  interface Request {
+    auth?: {
+      userId: string;
+      sessionId?: string;
+      getToken?: (options?: { template?: string }) => Promise<string>;
+    };
   }
 }
