@@ -2,7 +2,9 @@ import { Router } from "express";
 import { requireAuth } from "@clerk/express";
 import * as reviewController from "../controllers/reviewController";
 
+
 const router = Router();
+
 
 
 /**
@@ -16,11 +18,13 @@ router.get(
 /**
  * Create or update a review (must be logged in)
  */
-router.post(
-  "/",
-  requireAuth,
-  reviewController.addReview
-);
+// --- Create or update a review (must be logged in) ---
+router.post("/", (req, _res, next) => {
+  console.log("Authorization header:", req.headers.authorization);
+  next();
+}, requireAuth(), reviewController.addReview);
+
+
 
 /**
  * Delete a review for a movie (must be logged in)

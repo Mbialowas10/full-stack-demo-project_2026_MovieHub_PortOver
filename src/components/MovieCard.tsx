@@ -71,7 +71,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
   const handleBtnClick = async () => {
   if (!user) {
     // can't add a favourite if not authenticated, so prompt user to login first
-    alert("Please login"); 
+    alert("Please login to add a favourite."); 
     return;
   }
 

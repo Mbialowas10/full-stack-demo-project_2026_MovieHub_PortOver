@@ -12,14 +12,14 @@ export const addReview = async (
   rating: number,
   comment: string
 ) => {
-  // 1️⃣ Ensure user exists
+  // 1. Ensure user exists
   await prisma.user.upsert({
     where: { id: userId },
     update: {},
     create: { id: userId },
   });
 
-  // 2️⃣ Upsert movie
+  // 2. Upsert movie
   const movie = await prisma.tMDBMovie.upsert({
     where: { tmdb_id: Number(movieData.tmdb_id) },
     update: {},
@@ -32,7 +32,7 @@ export const addReview = async (
     },
   });
 
-  // 3️⃣ Upsert review (IMPORTANT FIX)
+  // 3. Upsert review (IMPORTANT FIX)
   const review = await prisma.review.upsert({
     where: {
       userId_movieId: {

@@ -1,3 +1,4 @@
+// LeaveReview.tsx
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth, useUser } from "@clerk/clerk-react";
@@ -14,6 +15,7 @@ export const LeaveReview = () => {
 
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,50 +25,64 @@ export const LeaveReview = () => {
       return;
     }
 
-    const reviewData = {
-      movie: movie,
-      rating: parseInt(rating),
-      comment: comment,
-    };
+    if (!movie) {
+      alert("Movie data is missing!");
+      return;
+    }
+
+    setLoading(true);
 
     try {
+      // Get token from Clerk 
       const token = await getToken();
+      if (!token) throw new Error("Could not get auth token");
+
       const resp = await fetch("http://localhost:3000/api/v1/reviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`, // Clerk JWT
         },
-        body: JSON.stringify(reviewData),
+        body: JSON.stringify({
+          movie,
+          rating: parseInt(rating),
+          comment,
+        }),
       });
-      if (!resp.ok) throw new Error("Failed to post review");
-      const savedReview = await resp.json();
-      console.log("Saved:", savedReview);
 
+      if (!resp.ok) {
+        const errText = await resp.text();
+        throw new Error(`Failed to post review: ${resp.status} ${errText}`);
+      }
+
+      const savedReview = await resp.json();
+      console.log("Saved review:", savedReview);
+
+      // Reset form
       setRating("");
       setComment("");
       navigate("/reviews");
-    } catch (e) {
-      console.error(e);
-      alert("Error submitting review");
+    } catch (err: any) {
+      console.error("Error submitting review:", err);
+      alert(`Error submitting review: ${err.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   const styles = {
-    form: `max-w-lg mx-auto mt-8 rounded-xl bg-white p-6 shadow-md flex flex-col gap-4`,
-    input: `rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500`,
-    textarea: `rounded-md border border-gray-300 px-4 py-2 min-h-[120px] resize-y focus:outline-none focus:ring-2 focus:ring-blue-500`,
-    button: `self-end rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 transition`,
-    label: `text-sm font-medium text-gray-700`,
+    form: "max-w-lg mx-auto mt-8 rounded-xl bg-white p-6 shadow-md flex flex-col gap-4",
+    input: "rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500",
+    textarea: "rounded-md border border-gray-300 px-4 py-2 min-h-[120px] resize-y focus:outline-none focus:ring-2 focus:ring-blue-500",
+    button: "self-end rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 transition disabled:opacity-50",
+    label: "text-sm font-medium text-gray-700",
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       {movieName && <h2 className="text-xl font-semibold">{movieName}</h2>}
-      {movieImage && (
-        <img src={movieImage} alt={movieName} className="w-full h-auto rounded mb-4" />
-      )}
-
+      {movieImage && <img src={movieImage} alt={movieName} className="w-full h-auto rounded mb-4" />}
+      
       <label className={styles.label}>
         Rating
         <select
@@ -76,11 +92,9 @@ export const LeaveReview = () => {
           required
         >
           <option value="">Select rating</option>
-          <option value="1">⭐ 1</option>
-          <option value="2">⭐ 2</option>
-          <option value="3">⭐ 3</option>
-          <option value="4">⭐ 4</option>
-          <option value="5">⭐ 5</option>
+          {[1, 2, 3, 4, 5].map((num) => (
+            <option key={num} value={num}>{`⭐ ${num}`}</option>
+          ))}
         </select>
       </label>
 
@@ -95,8 +109,8 @@ export const LeaveReview = () => {
         />
       </label>
 
-      <button type="submit" className={styles.button}>
-        Submit Review
+      <button type="submit" className={styles.button} disabled={loading}>
+        {loading ? "Submitting..." : "Submit Review"}
       </button>
     </form>
   );
