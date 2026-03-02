@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import ReviewCard from  "../ReviewCard"
+import { API_BASE_URL } from "../../api/config";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/reviews")
+    fetch(`${API_BASE_URL}/api/v1/reviews`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {

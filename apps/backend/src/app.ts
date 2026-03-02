@@ -14,9 +14,14 @@ dotenv.config(); // Load .env first
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL,
+].filter(Boolean) as string[];
+
 app.use(
     cors({
-    origin: "http://localhost:5173", // your frontend URL
+    origin: allowedOrigins.length > 0 ? allowedOrigins : "http://localhost:5173",
     credentials: true, // if sending cookies
   })
 );
