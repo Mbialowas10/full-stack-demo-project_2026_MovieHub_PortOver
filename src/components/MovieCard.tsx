@@ -70,7 +70,8 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
   // Toggle favourite
   const handleBtnClick = async () => {
   if (!user) {
-    alert("Please login");
+    // can't add a favourite if not authenticated, so prompt user to login first
+    alert("Please login"); 
     return;
   }
 
@@ -97,6 +98,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
     });
 
     const data = await res.json();
+    //console.log("Response from toggle favourite:", data);
     setIsFavourite(data.isFavourite);
     if (data.isFavourite) setIsStoredLocally(true);
     if (data.favouriteId) setDbId(data.favouriteId);

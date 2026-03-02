@@ -19,13 +19,11 @@ dotenv.config(); // Load .env first
 const app = express();
 
 // Middleware
-app.use(
-    cors({
-    origin: "http://localhost:5173", // your frontend URL
-    credentials: true, // if sending cookies
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors({
+  origin: "http://localhost:5173",
+  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+}));
 app.use(express.json());
 app.use(clerkMiddleware());
 app.use(morgan("dev")); // Log HTTP requests in development

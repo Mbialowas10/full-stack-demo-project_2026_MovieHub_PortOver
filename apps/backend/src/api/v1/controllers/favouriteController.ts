@@ -109,6 +109,7 @@ export const checkFavouriteStatus = async (req: Request, res: Response) => {
  * Toggle favourite (add/remove)
  */
 export const toggleFavourite = async (req: Request, res: Response) => {
+  console.log("Toggle favourite called with body:", req.body);
   try {
     const { userId } = getAuth(req);
     if (!userId) return res.status(401).json({ error: "Unauthenticated" });
