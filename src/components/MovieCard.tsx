@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { MovieCardProps } from "../types/MovieCardProps";
 import { useUser, useAuth } from "@clerk/clerk-react";
-
+import { API_BASE_URL } from "../api/config";
 
 
 
@@ -51,7 +51,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
       if (!tmdbId) return;
       try {
         const token = await getToken();
-        const res = await fetch(`http://localhost:3000/api/v1/favourites/status/${tmdbId}`, {
+        const res = await fetch(`${API_BASE_URL}/api/v1/favourites/status/${tmdbId}`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {}
         });
         const data = await res.json();
@@ -76,7 +76,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
 
   try {
     const token = await getToken();
-    const res = await fetch("http://localhost:3000/api/v1/favourites", {
+    const res = await fetch(`${API_BASE_URL}/api/v1/favourites`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

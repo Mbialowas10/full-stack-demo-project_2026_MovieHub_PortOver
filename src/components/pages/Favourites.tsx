@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { MovieCard } from "../MovieCard";
+import { API_BASE_URL } from "../../api/config";
 
 const Favourites = () => {
   const { user } = useUser();
@@ -13,7 +14,7 @@ const Favourites = () => {
     const fetchFavourites = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3000/api/v1/favourites/user/${user.id}`
+          `${API_BASE_URL}/api/v1/favourites/user/${user.id}`
         );
         const data = await res.json();
         setFavourites(data.favourites || []);
