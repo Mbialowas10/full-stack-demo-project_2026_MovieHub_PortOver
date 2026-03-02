@@ -18,4 +18,5 @@ function createPrismaClient() {
   });
 }
 
-export const prisma = createPrismaClient();
+//export const prisma = createPrismaClient();
+export const prisma = new PrismaClient();
