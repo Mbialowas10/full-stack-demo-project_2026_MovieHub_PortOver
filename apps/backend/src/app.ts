@@ -1,3 +1,4 @@
+//imports
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -20,7 +21,10 @@ const app = express();
 
 // Middleware
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://full-stack-demo-project-20-git-014abe-michael-bialowas-projects.vercel.app"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
