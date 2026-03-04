@@ -1,0 +1,10 @@
+{
+   "relatedProjects": ["prj_i7joMg23FuIYiycrAkiJTemwnoQk"],
+
+   "git": {
+     "deploymentEnabled": {
+         "*": false,
+         "main": true
+     }
+ }
+}
