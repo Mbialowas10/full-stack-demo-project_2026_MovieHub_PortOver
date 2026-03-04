@@ -16,7 +16,14 @@ const Favourites = () => {
       try {
         const token = await getToken();
         const res = await fetch(
+<<<<<<< HEAD
+          `http://localhost:3000/api/v1/favourites/user/${user.id}`,
+          {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          }
+=======
           `${API_BASE_URL}/api/v1/favourites/user/${user.id}`
+>>>>>>> 8d3fdf8a9d71bd017afbd6dbe2c531b480b3c99d
         );
         const data = await res.json();
         setFavourites(data.favourites || []);

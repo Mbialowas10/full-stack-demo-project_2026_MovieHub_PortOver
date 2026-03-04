@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "prisma generate --schema=apps/backend/prisma/schema.prisma && tsc -b && vite build",
+    "build": "prisma generate --schema=prisma/schema.prisma && tsc -b",
+    "vercel-build": "prisma generate --schema=prisma/schema.prisma && prisma migrate deploy --schema=prisma/schema.prisma && ts-node prisma/seed.ts && tsc -b",
     "postinstall": "prisma generate"
   },
   "keywords": [],
