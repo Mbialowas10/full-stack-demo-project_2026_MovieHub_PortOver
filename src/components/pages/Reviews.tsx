@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
 import { useUser, useAuth } from "@clerk/clerk-react";
 import ReviewCard from "../ReviewCard";
-=======
-import ReviewCard from  "../ReviewCard"
-import { API_BASE_URL } from "../../api/config";
->>>>>>> 8d3fdf8a9d71bd017afbd6dbe2c531b480b3c99d
+import { API_BASE_URL } from "../../api/config";  
 
 const Reviews = () => {
   const { user } = useUser();
@@ -13,13 +9,13 @@ const Reviews = () => {
   const [reviews, setReviews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
-<<<<<<< HEAD
     const fetchReviews = async () => {
       try {
         const url = user
-          ? `http://localhost:3000/api/v1/reviews/user/${user.id}`
-          : "http://localhost:3000/api/v1/reviews";
+          ? `${API_BASE_URL}/api/v1/reviews/user/${user.id}`
+          : `${API_BASE_URL}/api/v1/reviews`;
 
         const token = await getToken();
         const headers: HeadersInit = {};
@@ -30,11 +26,6 @@ const Reviews = () => {
         const res = await fetch(url, { headers });
         const data = await res.json();
 
-=======
-    fetch(`${API_BASE_URL}/api/v1/reviews`)
-      .then((res) => res.json())
-      .then((data) => {
->>>>>>> 8d3fdf8a9d71bd017afbd6dbe2c531b480b3c99d
         if (Array.isArray(data)) {
           setReviews(data);
         } else {
