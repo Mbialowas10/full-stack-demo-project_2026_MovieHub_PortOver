@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth, useUser } from "@clerk/clerk-react";
+import { API_BASE_URL } from "../api/config";
 
 export const LeaveReview = () => {
   const { getToken } = useAuth();
@@ -35,9 +36,13 @@ export const LeaveReview = () => {
     try {
       // Get token from Clerk 
       const token = await getToken();
+<<<<<<< HEAD
       if (!token) throw new Error("Could not get auth token");
 
       const resp = await fetch("http://localhost:3000/api/v1/reviews", {
+=======
+      const resp = await fetch(`${API_BASE_URL}/api/v1/reviews`, {
+>>>>>>> 8d3fdf8a9d71bd017afbd6dbe2c531b480b3c99d
         method: "POST",
         headers: {
           "Content-Type": "application/json",
