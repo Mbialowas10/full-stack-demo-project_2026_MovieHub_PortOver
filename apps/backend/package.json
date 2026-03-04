@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "vercel-build": "prisma migrate deploy && prisma db seed && npm run build",
+    "build": "prisma generate --schema=apps/backend/prisma/schema.prisma && tsc -b && vite build",
     "postinstall": "prisma generate"
   },
   "keywords": [],

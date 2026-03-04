@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "prisma generate --schema=apps/backend/prisma/schema.prisma && tsc -b && vite build",
     "lint": "eslint .",
+    "vercel-build": "prisma migrate deploy && prisma db seed && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
