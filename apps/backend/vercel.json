@@ -2,8 +2,7 @@
    "relatedProjects": ["prj_ChBDQTiVo8k1TG2kot9H9QQaNuTW"],
    "git": {
      "deploymentEnabled": {
-         "*": false,
-         "main": true
+         "*": true
      }
  },
  "rewrites": [
