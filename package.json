@@ -6,10 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "vercel-build": "prisma migrate deploy && prisma db seed && npm run build",
+    "vercel-build": "vite build",
     "preview": "vite preview"
-  },
+},
   "dependencies": {
     "@clerk/clerk-react": "^5.61.1",
     "@clerk/express": "^1.7.74",
