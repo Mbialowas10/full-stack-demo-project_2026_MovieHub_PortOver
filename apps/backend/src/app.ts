@@ -43,8 +43,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
 app.use(clerkMiddleware());
+app.use(express.json());
 app.use(morgan("dev")); // Log HTTP requests in development
 
 // Root route
