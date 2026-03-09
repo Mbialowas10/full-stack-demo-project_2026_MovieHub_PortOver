@@ -23,7 +23,7 @@ const app = express();
 const corsOptions = {
   origin: [
     "http://localhost:5173",
-    "https://full-stack-demo-project-20-git-014abe-michael-bialowas-projects.vercel.app"
+    "https://full-stack-demo-project-2026-movie-cyan.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -31,6 +31,18 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 app.use(express.json());
 app.use(clerkMiddleware());
 app.use(morgan("dev")); // Log HTTP requests in development

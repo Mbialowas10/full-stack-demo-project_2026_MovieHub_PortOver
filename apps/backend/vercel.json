@@ -1,14 +1,25 @@
 {
-   "relatedProjects": ["prj_ChBDQTiVo8k1TG2kot9H9QQaNuTW"],
-   "git": {
-     "deploymentEnabled": {
-         "*": true
-     }
- },
- "rewrites": [
-      {
-            "source": "/(.*)",
-            "destination": "/api" 
-      }
-   ]
+  "relatedProjects": ["prj_ChBDQTiVo8k1TG2kot9H9QQaNuTW"],
+  "git": {
+    "deploymentEnabled": {
+      "*": true
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://full-stack-demo-project-2026-movie-cyan.vercel.app" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,DELETE,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type,Authorization" },
+        { "key": "Access-Control-Allow-Credentials", "value": "true" }
+      ]
+    }
+  ]
 }
