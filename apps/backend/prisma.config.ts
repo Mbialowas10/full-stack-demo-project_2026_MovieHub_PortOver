@@ -10,6 +10,6 @@ export default defineConfig({
     seed: "ts-node prisma/seed.ts",
   },
   datasource: {
-    url: process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5433/movie_hub_db",
+    url: process.env.DATABASE_PROD_URL || "postgresql://postgres:postgres@localhost:5433/movie_hub_db",
   },
 });
