@@ -5,6 +5,7 @@
       "*": true
     }
   },
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",
