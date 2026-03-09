@@ -1,16 +1,21 @@
 {
-    "compilerOptions": {
-      "target": "ES6",
-      "module": "commonjs",
-      "outDir": "./dist",
-      "baseUrl": "./",
-      "sourceMap": true,
-      "lib": ["ESNext"],
-      "paths": {
-        "*": ["*"],
-        "@shared/*": ["../../shared/*"]
-      }
-    },
-    "include": ["src/**/*", "tests/**/*", "types", "global.d.ts", "api/index.ts","src/types/**/*"],
-    "exclude": ["node_modules", "dist"]
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "sourceMap": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "*": ["*"],
+      "@shared/*": ["../../shared/*"]
+    }
+  },
+  "include": ["src/**/*", "tests/**/*", "types", "global.d.ts", "api/index.ts", "src/types/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
