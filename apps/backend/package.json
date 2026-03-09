@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -b",
     "postinstall": "prisma generate",
-    "vercel-build": "prisma migrate deploy --schema=./prisma/schema.prisma && prisma db seed --schema=./prisma/schema.prisma && tsc -b"
+    "vercel-build": "npm install --include=dev && prisma migrate deploy --schema=./prisma/schema.prisma && prisma db seed --schema=./prisma/schema.prisma && tsc -b"
+
   },
   "keywords": [],
   "author": "",
