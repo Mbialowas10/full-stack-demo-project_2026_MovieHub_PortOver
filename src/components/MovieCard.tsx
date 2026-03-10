@@ -54,6 +54,13 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
         const res = await fetch(`${API_BASE_URL}/api/v1/favourites/status/${tmdbId}`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {}
         });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error("Status check failed:", errorText);
+          return;
+        }
+
         const data = await res.json();
 
         setIsFavourite(data.isFavourite);
@@ -94,6 +101,11 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
         release_date,
       }),
     });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Toggle favourite failed: ${errorText}`);
+    }
 
     const data = await res.json();
     //console.log("Response from toggle favourite:", data);

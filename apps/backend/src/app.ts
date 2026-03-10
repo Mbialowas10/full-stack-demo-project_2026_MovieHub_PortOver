@@ -45,8 +45,8 @@ app.use("/api/health", healthRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // 4. Clerk + body parsing — after public routes
-app.use(clerkMiddleware());
 app.use(express.json());
+app.use(clerkMiddleware());
 app.use(morgan("dev"));
 
 // 5. Protected routes — after Clerk
