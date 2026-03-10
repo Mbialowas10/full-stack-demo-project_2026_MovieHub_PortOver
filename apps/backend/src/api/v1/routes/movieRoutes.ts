@@ -10,7 +10,7 @@ const router: Router = Router();
 router.get("/movies", movieController.getAllMovies);
 
 // Protected routes
-router.post("/movies", requireAuth, movieController.createMovie);
-router.delete("/movies/:id", requireAuth, movieController.removeMovie);
+router.post("/movies", requireAuth(), movieController.createMovie);
+router.delete("/movies/:id", requireAuth(), movieController.removeMovie);
 
 export default router;
