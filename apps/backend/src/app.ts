@@ -20,7 +20,8 @@ const corsOptions = {
   origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
     const allowed = [
       "http://localhost:5173",
-      "https://full-stack-demo-project-2026-movie-cyan.vercel.app"
+      "https://full-stack-demo-project-2026-movie-cyan.vercel.app",
+      /\.vercel\.app$/   // allow all vercel preview deploys
     ];
     const previewPattern = /^https:\/\/full-stack-demo-project-20.*\.vercel\.app$/;
     if (!origin || allowed.includes(origin) || previewPattern.test(origin)) {
