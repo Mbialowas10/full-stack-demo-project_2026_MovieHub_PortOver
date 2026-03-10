@@ -36,17 +36,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// 2. Handle OPTIONS preflight — before Clerk
-app.use((req, res, next) => {
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
-    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
-    res.header("Access-Control-Allow-Credentials", "true");
-    return res.sendStatus(204);
-  }
-  next();
-});
 
 // 3. Public routes — before Clerk
 app.get("/", (_req, res) => {

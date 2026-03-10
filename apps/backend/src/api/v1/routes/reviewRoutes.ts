@@ -32,7 +32,7 @@ router.post("/", (req, _res, next) => {
  */
 router.delete(
   "/:tmdbId",
-  requireAuth,
+  requireAuth(),
   reviewController.removeReview
 );
 

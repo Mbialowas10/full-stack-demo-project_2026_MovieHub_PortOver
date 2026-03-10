@@ -20,7 +20,7 @@ router.post("/", (req, _res, next) => {
 // Remove favourite (protected)
 router.delete(
   "/:id",
-  requireAuth,
+  requireAuth(),
   favouriteController.removeFavourite
 );
 
