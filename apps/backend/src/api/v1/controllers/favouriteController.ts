@@ -112,6 +112,8 @@ export const toggleFavourite = async (req: Request, res: Response) => {
   console.log("Toggle favourite called with body:", req.body);
   try {
     const { userId } = getAuth(req);
+    console.log("1. userId:", userId);
+    console.log("2. body:", JSON.stringify(req.body));
     if (!userId) return res.status(401).json({ error: "Unauthenticated" });
 
     const {
@@ -127,6 +129,7 @@ export const toggleFavourite = async (req: Request, res: Response) => {
 
     if (!tmdb_id) return res.status(400).json({ error: "tmdb_id is required" });
 
+    console.log("3. upserting user...");
     // Ensure user exists in DB
     await prisma.user.upsert({
       where: { id: userId },
@@ -134,6 +137,7 @@ export const toggleFavourite = async (req: Request, res: Response) => {
       create: { id: userId },
     });
 
+    console.log("4. upserting movie...");
     // Upsert movie in local DB
     const movie = await prisma.tMDBMovie.upsert({
       where: { tmdb_id: Number(tmdb_id) },
@@ -150,11 +154,13 @@ export const toggleFavourite = async (req: Request, res: Response) => {
       },
     });
 
+    console.log("5. checking existing favourite...");
     // Check if favourite exists
     const existingFav = await prisma.favourite.findUnique({
       where: { userId_movieId: { userId, movieId: movie.id } },
     });
 
+    console.log("6. existingFav:", existingFav);
     if (existingFav) {
       await prisma.favourite.delete({ where: { id: existingFav.id } });
       return res.json({ message: "Removed from favourites", isFavourite: false });
@@ -164,9 +170,12 @@ export const toggleFavourite = async (req: Request, res: Response) => {
       data: { userId, movieId: movie.id },
     });
 
+    console.log("7. done:", newFav);
     return res.json({ message: "Added to favourites", isFavourite: true, favouriteId: newFav.id });
   } catch (err) {
+    console.error("TOGGLE ERROR:", err.message);
+    console.error("TOGGLE STACK:", err.stack);
     console.error("Error toggling favourite:", err);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: err.message || "Server error" });
   }
 };
