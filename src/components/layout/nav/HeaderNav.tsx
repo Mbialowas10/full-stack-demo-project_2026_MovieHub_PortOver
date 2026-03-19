@@ -1,25 +1,19 @@
 import { NavLink } from "react-router-dom";
+import {
+  useUser,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/clerk-react";
 
-
-/**
- * Purpose: To layout top navigation for 
- * Trending, Search, Favourites, Reviews, and Profile
- * Pages
- * Styling - TailWindCSS 
- * @returns JSX 
- */
 const HeaderNav = () => {
+  const { user } = useUser();
 
-  /**
-   * items represents an array of objects containing key
-   * value pairs: path and label
-   */
   const items = [
     { path: "/", label: "Trending" },
     { path: "/search", label: "Search" },
     { path: "/favourites", label: "Favourites" },
     { path: "/reviews", label: "Reviews" },
-    { path: "/profile", label: "Profile" },
   ];
 
   return (
@@ -37,8 +31,9 @@ const HeaderNav = () => {
           </NavLink>
 
           {/* Nav */}
-          <ul className="flex items-center gap-1">
-            {/* Destructuring path and label from object */}
+          <ul className="flex items-center gap-2">
+
+            {/* Main Nav Items */}
             {items.map(({ path, label }) => (
               <li key={path}>
                 <NavLink
@@ -49,10 +44,44 @@ const HeaderNav = () => {
                 </NavLink>
               </li>
             ))}
+
+            {/* Show when SIGNED OUT */}
+            <SignedOut>
+              <li>
+                <NavLink
+                  to="/login"
+                  className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-slate-800"
+                >
+                  Login
+                </NavLink>
+              </li>
+            </SignedOut>
+
+            {/* Show when SIGNED IN */}
+            <SignedIn>
+              {/* Greeting */}
+              <li className="text-sm text-green-600 dark:text-green-400">
+                Hi {user?.firstName}
+              </li>
+
+              {/* Clerk Avatar + Dropdown */}
+              <li>
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-8 h-8",
+                    },
+                  }}
+                />
+              </li>
+            </SignedIn>
+
           </ul>
         </div>
       </nav>
     </header>
   );
-}
+};
+
 export default HeaderNav;

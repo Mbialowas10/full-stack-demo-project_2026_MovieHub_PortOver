@@ -1,8 +1,8 @@
+import type { TMDBMovie } from "./TMDBMovie";
+
 export type MovieCardProps = {
-    movieID: number ; 
-    name: string;
-    description: string;
-    image: string;
+    movie: TMDBMovie;
 };
+
 
 

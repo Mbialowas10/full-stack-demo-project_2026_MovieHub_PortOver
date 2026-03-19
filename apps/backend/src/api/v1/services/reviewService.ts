@@ -1,0 +1,102 @@
+import { prisma } from "../../../db/prisma";
+
+export const addReview = async (
+  userId: string,
+  movieData: {
+    tmdb_id: number;
+    title: string;
+    overview?: string;
+    poster_path?: string;
+    release_date?: Date;
+  },
+  rating: number,
+  comment: string
+) => {
+  // 1. Ensure user exists
+  await prisma.user.upsert({
+    where: { id: userId },
+    update: {},
+    create: { id: userId },
+  });
+
+  // 2. Upsert movie
+  const movie = await prisma.tMDBMovie.upsert({
+    where: { tmdb_id: Number(movieData.tmdb_id) },
+    update: {},
+    create: {
+      tmdb_id: Number(movieData.tmdb_id),
+      title: movieData.title,
+      overview: movieData.overview,
+      poster_path: movieData.poster_path,
+      release_date: movieData.release_date ? new Date(movieData.release_date) : null,
+    },
+  });
+
+  // 3. Upsert review (IMPORTANT FIX)
+  const review = await prisma.review.upsert({
+    where: {
+      userId_movieId: {
+        userId,
+        movieId: movie.id,
+      },
+    },
+    update: {
+      rating,
+      comment,
+    },
+    create: {
+      userId,
+      movieId: movie.id,
+      rating,
+      comment,
+    },
+  });
+
+  return review;
+};
+
+export const removeReview = async (userId: string, tmdbId: number) => {
+  const movie = await prisma.tMDBMovie.findUnique({
+    where: { tmdb_id: tmdbId },
+  });
+
+  if (!movie) throw new Error(`Movie ${tmdbId} not found`);
+
+  return prisma.review.delete({
+    where: {
+      userId_movieId: {
+        userId,
+        movieId: movie.id,
+      },
+    },
+  });
+};
+
+export const getUserReviews = async (userId: string) => {
+  return prisma.review.findMany({
+    where: { userId },
+    include: { movie: true },
+    orderBy: { createdAt: "desc" },
+  });
+};
+
+export const getMovieReviews = async (tmdbId: number) => {
+  const movie = await prisma.tMDBMovie.findUnique({
+    where: { tmdb_id: tmdbId },
+  });
+
+  if (!movie) return [];
+
+  return prisma.review.findMany({
+    where: { movieId: movie.id },
+    include: { movie: true, user: true },
+    orderBy: { createdAt: "desc" },
+  });
+};
+
+export const getAllReviews = async () => {
+  return prisma.review.findMany({
+    include: { movie: true, user: true },
+    orderBy: { createdAt: "desc" },
+  });
+};
