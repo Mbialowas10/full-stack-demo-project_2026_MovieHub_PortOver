@@ -23,11 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
-<<<<<<< HEAD
-=======
 apps/backend/.env
 notes/*.*md
->>>>>>> clerk
 
 .vercel
 .env*.local
