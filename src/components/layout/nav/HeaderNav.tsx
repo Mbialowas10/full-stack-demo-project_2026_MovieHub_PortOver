@@ -7,8 +7,10 @@ import {
 } from "@clerk/clerk-react";
 
 const HeaderNav = () => {
-  const { user } = useUser();
+  // destructure user object from Clerk's useUser hook to access user information for personalized greetings and conditional rendering based on authentication status.
+  const { user } = useUser(); 
 
+  // Define navigation items. 
   const items = [
     { path: "/", label: "Trending" },
     { path: "/search", label: "Search" },
@@ -45,7 +47,7 @@ const HeaderNav = () => {
               </li>
             ))}
 
-            {/* Show when SIGNED OUT */}
+            {/* NOTE: this component is only visible when the user is not signed in and comes from clerk */}
             <SignedOut>
               <li>
                 <NavLink

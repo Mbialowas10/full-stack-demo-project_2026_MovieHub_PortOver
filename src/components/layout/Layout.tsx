@@ -15,6 +15,7 @@ export default function Layout() {
             <HeaderNav />
             {/* Outlet is where components get loaded into. */}
             <Outlet />
+            {/* Footer applied to all pages in website - NOTE: components take format to inline tags*/}
             <Footer />
         </>
     )

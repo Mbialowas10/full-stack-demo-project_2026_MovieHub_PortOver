@@ -8,9 +8,8 @@ import { API_BASE_URL } from "../api/config";
 
 
 /**
- * MovieCard component displays individual movie details and allows users to add/remove from favourites
- * and to initially save to a local postgreSQL database. 
- * TODO - provide a link to leave a review for the movie.
+ * MovieCard component displays individual movie details and allows users to add/remove favourites.
+ * Initially records are saved to a postgreSQL database. It also provides a link to leave a review for a movie.
  * @param param0 
  * @returns 
  */
@@ -45,7 +44,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
   const [isStoredLocally, setIsStoredLocally] = useState(false);
   const [, setDbId] = useState<number | null>(null);
 
-  // Check if the movie is already saved in the database and its favourite status
+  // Check if the movie is already saved in the database and if it's a favourite
   useEffect(() => {
     const checkStatus = async () => {
       if (!tmdbId) return;

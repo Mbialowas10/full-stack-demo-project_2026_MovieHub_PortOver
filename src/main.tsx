@@ -11,6 +11,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {/* BrowserRouter wraps App component for routing purposes i.e navigation through app.*/}
     <BrowserRouter>
+      {/* ClerkProvider wraps App component to provide authentication context to the entire app. It takes the publishable key as a prop to initialize Clerk. */}
       <ClerkProvider publishableKey={clerkPubKey}>
         <App />
       </ClerkProvider>

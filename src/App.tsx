@@ -1,12 +1,9 @@
 import Layout  from "./components/layout/Layout"
-//import movies from './data/now_playing.json'
-
 import { Routes, Route } from "react-router-dom";
 import TrendingMovies from "./components/pages/TreadingMovies";
 import SearchMovies from "./components/pages/SearchMovies";
 import Favourites from "./components/pages/Favourites";
 import Reviews from "./components/pages/Reviews";
-
 import {ErrorBoundary} from "./components/ErrorBoundary";
 import {LeaveReview} from "./components/LeaveReview"
 import SignInPage from "./components/pages/SignIn";

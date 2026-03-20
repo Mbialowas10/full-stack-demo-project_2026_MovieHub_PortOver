@@ -58,7 +58,7 @@ const Reviews = () => {
           <ReviewCard
             key={review.id}
             movie ={review.movie.title}
-            name={review.user?.email || review.userId}
+            name={review.user?.name || review.user?.email || review.userId}
             rating={review.rating}
             review={review.comment}
             createdAt={new Date(review.createdAt).toLocaleDateString()}

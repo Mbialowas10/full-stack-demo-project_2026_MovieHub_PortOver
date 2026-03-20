@@ -23,6 +23,7 @@ MovieHub is an web application that allows users to book mark movies to watch la
 * API usage: The Movie Database (TMDB) - **[The Movie Database (TMDB) API](https://www.themoviedb.org)** 
 * Vercel: frontend deployment
 * Neon: backend deployment
+* Tailwind CSS
 
 
 ### Installation
