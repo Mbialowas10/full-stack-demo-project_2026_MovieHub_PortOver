@@ -15,7 +15,9 @@ const SearchMovies = () => {
 
   useEffect(() => {
   if (!term) return;
-
+  
+  // pass the term to the /search/movie endpoint of TMDB api. 
+  // encodeURIComponent is used to ensure that the search term is properly encoded for use in a URL query string.
   fetchFromTMDB("/search/movie", `query=${encodeURIComponent(term)}`)
     .then((data) => {
       setMovies(data.results ?? []);

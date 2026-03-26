@@ -4,8 +4,8 @@ import { MovieCard } from "../MovieCard";
 import { API_BASE_URL } from "../../api/config";
 
 const Favourites = () => {
-  const { user } = useUser();
-  const { getToken } = useAuth();
+  const { user } = useUser(); // get the current user from Clerk authentication context
+  const { getToken } = useAuth(); //get the getToken function from Clerk auth context 
   const [favourites, setFavourites] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 

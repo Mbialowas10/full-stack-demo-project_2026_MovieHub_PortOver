@@ -16,6 +16,7 @@ import SignInPage from "./components/pages/SignIn";
  */
 const  App = () => {
   return(
+    // foreach route emit a piece of UI
     <Routes>
     {/* Layout renders all child routes via outlet */}
       <Route path="/" element={<Layout />}>

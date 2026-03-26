@@ -5,7 +5,7 @@ import * as favouriteController from "../controllers/favouriteController";
 const router = Router();
 
 // Get favourites for a user (public)
-router.get("/user/:userId", favouriteController.getUserFavourites);
+router.get("/user/:userId",requireAuth(), favouriteController.getUserFavourites);
 
 // Check if a specific movie is favourited by current user
 router.get("/status/:tmdbId", favouriteController.checkFavouriteStatus);

@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import type { ReactNode } from "react";
 
+
+/**
+ * Some Error Handling for app. This so the app doesn't crash and frustrate its users.
+ * Acts as a try/catch for React Components
+ */
+
+// wrap components inside
 interface Props {
   children: ReactNode;
 }
 
+// tracks if an error has occurred. 
 interface State {
   hasError: boolean;
 }

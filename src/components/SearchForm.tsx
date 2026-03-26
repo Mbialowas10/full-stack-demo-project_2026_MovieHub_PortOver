@@ -2,7 +2,10 @@ import { useState } from "react";
 import type { SearchFormProps } from "../types/SearchFormProps";
 
 const SearchForm = ({ onSearch }: SearchFormProps) => {
+  // in-line styles object for css purposes and specific to this component. 
   const styles = {
+    // note use of ` (backtick) here. This allows us to write a string across multiple lines, 
+    // useful for writing CSS classes in a more readable format.
     form: `
       flex items-center gap-3
       max-w-md mx-auto mt-6
