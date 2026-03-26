@@ -61,9 +61,12 @@ export const removeFavourite = async (req: Request, res: Response) => {
  */
 export const getUserFavourites = async (req: Request, res: Response) => {
   try {
+    
     const userIdRaw = req.params.userId;
     const userId = Array.isArray(userIdRaw) ? userIdRaw[0] : userIdRaw;
 
+    if (!userId) return res.status(401).json({ error: "Unauthenticated" });
+    
     const favourites = await prisma.favourite.findMany({
       where: { userId },
       include: { movie: true },
